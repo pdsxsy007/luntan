@@ -28,6 +28,7 @@ public class MainActivity extends BaseActivity {
         super.initView();
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //
 
 
     }
