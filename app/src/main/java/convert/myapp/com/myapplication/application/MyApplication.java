@@ -19,6 +19,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 import convert.myapp.com.myapplication.utils.Cockroach;
+import convert.myapp.com.myapplication.utils.MyLogUtils;
 import convert.myapp.com.myapplication.utils.SettingUtils;
 import okhttp3.OkHttpClient;
 
@@ -27,6 +28,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        MyLogUtils.isDebug(false);
         appContext = this.getApplicationContext();
         initAppTheme();
        initCockroach();

@@ -20,6 +20,7 @@
         <activity android:name=".avtivity.ArticleDetailsActivity" />
         <activity android:name=".avtivity.MainActivity" />
         <activity android:name=".avtivity.RegiestActivity" />
+        <activity android:name=".avtivity.SendArticleActivity" />
     </application>
 
 </manifest>

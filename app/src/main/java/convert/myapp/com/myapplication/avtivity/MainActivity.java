@@ -34,7 +34,9 @@ import convert.myapp.com.myapplication.bean.ArticleBean;
 import convert.myapp.com.myapplication.bean.NickNameBean;
 import convert.myapp.com.myapplication.http.Api;
 import convert.myapp.com.myapplication.utils.JsonUtil;
+import convert.myapp.com.myapplication.utils.MyLogUtils;
 import convert.myapp.com.myapplication.utils.SettingUtils;
+import okhttp3.Headers;
 
 public class MainActivity extends BaseActivity {
 
@@ -230,45 +232,8 @@ public class MainActivity extends BaseActivity {
     protected void initData() {
         super.initData();
 
-
-        //getHomeData();
     }
 
-    /**
-     * 获取首页帖子列表
-     */
-    private void getHomeData() {
-
-        OkGo.<String>get(Api.baseUrl+Api.articleListUrl)
-                .params("pageNum",num)
-                .params("pageSize",10)
-                .execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(Response<String> response) {
-                        Log.e("帖子列表",response.body());
-
-                        ArticleBean articleBean = JsonUtil.parseJson(response.body(),ArticleBean.class);
-                        int code = articleBean.getCode();
-                        if(code == 200){
-                            List<ArticleBean.Data> data = articleBean.getData();
-                            tieAdapter = new TieAdapter(MainActivity.this,R.layout.list_item_tiezi,data);
-                            rv_msg_list.setAdapter(tieAdapter);
-                            tieAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-                                    Intent intent = new Intent(MainActivity.this, ArticleDetailsActivity.class);
-                                    startActivity(intent);
-                                }
-
-                                @Override
-                                public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
-                                    return false;
-                                }
-                            });
-                        }
-                    }
-                });
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -319,18 +284,34 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initLeftData() {
+
+
         OkGo.<String>get(Api.baseUrl+Api.nickNameListUrl)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
-                        Log.e("ss",response.body());
+                        MyLogUtils.e("左侧角色列表",response.body());
 
                         NickNameBean nickNameBean = JsonUtil.parseJson(response.body(),NickNameBean.class);
                         int code = nickNameBean.getCode();
                         if(code == 200){
-                            List<NickNameBean.Data> data = nickNameBean.getData();
+                            final List<NickNameBean.Data> data = nickNameBean.getData();
                             adapter = new NickNameAdapter(MainActivity.this,R.layout.list_item_nickname,data);
                             recyclerView.setAdapter(adapter);
+                            adapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
+
+                                    Intent intent = new Intent(MainActivity.this,SendArticleActivity.class);
+                                    intent.putExtra("nickNameId",data.get(position).getId()+"");
+                                    startActivity(intent);
+                                }
+
+                                @Override
+                                public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
+                                    return false;
+                                }
+                            });
                         }
                     }
                 });
