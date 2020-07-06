@@ -53,6 +53,7 @@ public class LoginActivity extends BaseActivity {
         if(!userId.equals("")){
             Intent intent = new Intent(LoginActivity.this,MainActivity.class);
             startActivity(intent);
+            finish();
         }
         rl_reg.setOnClickListener(new View.OnClickListener() {
             @Override
