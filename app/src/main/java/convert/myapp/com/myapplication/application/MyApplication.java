@@ -28,10 +28,10 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        MyLogUtils.isDebug(false);
+        MyLogUtils.isDebug(true);
         appContext = this.getApplicationContext();
         initAppTheme();
-       initCockroach();
+       //initCockroach();
 
 
         initOkGo();

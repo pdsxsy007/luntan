@@ -21,6 +21,7 @@ import convert.myapp.com.myapplication.base.BaseActivity;
 import convert.myapp.com.myapplication.bean.LoginBean;
 import convert.myapp.com.myapplication.http.Api;
 import convert.myapp.com.myapplication.utils.JsonUtil;
+import convert.myapp.com.myapplication.utils.MyLogUtils;
 import convert.myapp.com.myapplication.utils.SPUtils;
 import convert.myapp.com.myapplication.utils.ToastUtils;
 
@@ -48,6 +49,11 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void initListener() {
         super.initListener();
+        String userId = (String) SPUtils.get(this, "userId", "");
+        if(!userId.equals("")){
+            Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+            startActivity(intent);
+        }
         rl_reg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,11 +78,11 @@ public class LoginActivity extends BaseActivity {
                         .execute(new StringCallback() {
                             @Override
                             public void onSuccess(Response<String> response) {
-                                Log.e("登录",response.body());
+                                MyLogUtils.e("登录",response.body());
                                 LoginBean loginBean = JsonUtil.parseJson(response.body(),LoginBean.class);
                                 if(loginBean.getCode() == 200){
                                     ToastUtils.showToast(LoginActivity.this,"登录成功");
-                                    SPUtils.put(LoginActivity.this,"userId",loginBean.getData().getUser().getUserId());
+                                    SPUtils.put(LoginActivity.this,"userId",loginBean.getData().getUser().getUserId()+"");
                                     Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                                     startActivity(intent);
                                     finish();

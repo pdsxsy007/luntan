@@ -137,7 +137,7 @@ public class MainActivity extends BaseActivity {
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
-                        Log.e("帖子列表刷新",response.body());
+                        MyLogUtils.e("帖子列表刷新",response.body());
 
                         ArticleBean articleBean = JsonUtil.parseJson(response.body(),ArticleBean.class);
                         int code = articleBean.getCode();
@@ -190,7 +190,7 @@ public class MainActivity extends BaseActivity {
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
-                        Log.e("帖子列表刷新",response.body());
+                        MyLogUtils.e("帖子列表刷新",response.body());
 
                         ArticleBean articleBean = JsonUtil.parseJson(response.body(),ArticleBean.class);
                         int code = articleBean.getCode();

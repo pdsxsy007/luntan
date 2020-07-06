@@ -14,6 +14,7 @@ import butterknife.BindView;
 import convert.myapp.com.myapplication.R;
 import convert.myapp.com.myapplication.base.BaseActivity;
 import convert.myapp.com.myapplication.http.Api;
+import convert.myapp.com.myapplication.utils.MyLogUtils;
 import convert.myapp.com.myapplication.utils.SPUtils;
 import convert.myapp.com.myapplication.utils.ToastUtils;
 
@@ -71,7 +72,7 @@ public class SendArticleActivity extends BaseActivity {
                         .execute(new StringCallback() {
                             @Override
                             public void onSuccess(Response<String> response) {
-                                Log.e("发帖",response.body());
+                                MyLogUtils.e("发帖",response.body());
 
 
                             }

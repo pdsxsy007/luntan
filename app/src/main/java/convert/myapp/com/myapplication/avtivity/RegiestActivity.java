@@ -17,6 +17,7 @@ import convert.myapp.com.myapplication.base.BaseActivity;
 import convert.myapp.com.myapplication.bean.RegisterBean;
 import convert.myapp.com.myapplication.http.Api;
 import convert.myapp.com.myapplication.utils.JsonUtil;
+import convert.myapp.com.myapplication.utils.MyLogUtils;
 import convert.myapp.com.myapplication.utils.ToastUtils;
 
 public class RegiestActivity extends BaseActivity {
@@ -65,7 +66,7 @@ public class RegiestActivity extends BaseActivity {
                         .execute(new StringCallback() {
                             @Override
                             public void onSuccess(Response<String> response) {
-                                Log.e("注册",response.body());
+                                MyLogUtils.e("注册",response.body());
                                 RegisterBean registerBean = JsonUtil.parseJson(response.toString(),RegisterBean.class);
                              if(registerBean.getCode() == 200){
                                  ToastUtils.showToast(RegiestActivity.this,"注册成功");
