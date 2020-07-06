@@ -3,4 +3,13 @@
     <color name="colorPrimary">#42adbb</color>
     <color name="colorPrimaryDark">#42adbb</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="textColorPrimary">#616161</color>
+    <color name="viewBackground">@android:color/white</color>
+    <color name="drawbg">@android:color/white</color>
+    <color name="textColor">@android:color/black</color>
+    <color name="viewBg">#616161</color>
+    <color name="headerBg">@android:color/white</color>
+    <color name="recylviewBg">#edecec</color>
+    <color name="recylviewItemBg">#ffffff</color>
 </resources>

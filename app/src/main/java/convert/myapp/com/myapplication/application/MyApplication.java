@@ -1,8 +1,10 @@
 package convert.myapp.com.myapplication.application;
 
 import android.app.Application;
+import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v7.app.AppCompatDelegate;
 
 
 import com.lzy.okgo.OkGo;
@@ -17,19 +19,30 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 import convert.myapp.com.myapplication.utils.Cockroach;
+import convert.myapp.com.myapplication.utils.SettingUtils;
 import okhttp3.OkHttpClient;
 
 public class MyApplication extends Application {
-
+    public static Context appContext;
     @Override
     public void onCreate() {
         super.onCreate();
-
-        initCockroach();
+        appContext = this.getApplicationContext();
+        initAppTheme();
+        //initCockroach();
 
 
         initOkGo();
 
+    }
+
+    private void initAppTheme() {
+        SettingUtils settingUtils = SettingUtils.getInstance();
+        if (settingUtils.isNightMode()) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
     }
 
     private void initCockroach() {

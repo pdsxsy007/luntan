@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        >
+        <convert.myapp.com.myapplication.view.XCRoundImageView
+            android:id="@+id/xcimage"
+            android:layout_width="40dp"
+            android:layout_height="40dp"></convert.myapp.com.myapplication.view.XCRoundImageView>
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="hhhh"
+            android:textSize="16sp"
+            android:layout_marginLeft="20dp"
+            ></TextView>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/viewBg"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="10dp"
+        ></View>
+</LinearLayout>
