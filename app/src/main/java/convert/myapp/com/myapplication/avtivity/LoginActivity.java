@@ -1,14 +1,24 @@
 package convert.myapp.com.myapplication.avtivity;
 
 import android.content.Intent;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.ViewUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
+import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
+
 import butterknife.BindView;
 import convert.myapp.com.myapplication.R;
 import convert.myapp.com.myapplication.base.BaseActivity;
+import convert.myapp.com.myapplication.http.Api;
+import convert.myapp.com.myapplication.utils.SPUtils;
 import convert.myapp.com.myapplication.utils.ToastUtils;
 
 public class LoginActivity extends BaseActivity {
@@ -53,8 +63,23 @@ public class LoginActivity extends BaseActivity {
                     ToastUtils.showToast(LoginActivity.this,"请输入用户名或密码!");
                     return;
                 }
-                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                startActivity(intent);
+                OkGo.<String>post(Api.baseUrl + Api.login)
+                        .params("userAccount",name)
+                        .params("userPassword", pwd)
+                        .execute(new StringCallback() {
+                            @Override
+                            public void onSuccess(Response<String> response) {
+                                Log.e("登录",response.body());
+
+
+                            }
+                            @Override
+                            public void onError(Response<String> response) {
+                                super.onError(response);
+
+                            }
+                        });
+
             }
         });
     }
