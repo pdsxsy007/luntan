@@ -5,8 +5,8 @@ public class Api {
     public static String imgUrl = "http://192.168.30.30:9090/";
     public static String nickNameListUrl = "nickname/list";
     public static String articleListUrl = "article/list";
-    public static String login = "user/login";//登录
+    public static String loginUrl = "user/login";//登录
 
-    public static String register = "/user/register";//注册
+    public static String registerUrl = "/user/register";//注册
 
 }

@@ -3,6 +3,7 @@ package convert.myapp.com.myapplication.avtivity;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.ViewUtils;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +18,9 @@ import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 import butterknife.BindView;
 import convert.myapp.com.myapplication.R;
 import convert.myapp.com.myapplication.base.BaseActivity;
+import convert.myapp.com.myapplication.bean.LoginBean;
 import convert.myapp.com.myapplication.http.Api;
+import convert.myapp.com.myapplication.utils.JsonUtil;
 import convert.myapp.com.myapplication.utils.SPUtils;
 import convert.myapp.com.myapplication.utils.ToastUtils;
 
@@ -63,14 +66,23 @@ public class LoginActivity extends BaseActivity {
                     ToastUtils.showToast(LoginActivity.this,"请输入用户名或密码!");
                     return;
                 }
-                OkGo.<String>post(Api.baseUrl + Api.login)
+                OkGo.<String>post(Api.baseUrl + Api.loginUrl)
                         .params("userAccount",name)
                         .params("userPassword", pwd)
                         .execute(new StringCallback() {
                             @Override
                             public void onSuccess(Response<String> response) {
                                 Log.e("登录",response.body());
-
+                                LoginBean loginBean = JsonUtil.parseJson(response.body(),LoginBean.class);
+                                if(loginBean.getCode() == 200){
+                                    ToastUtils.showToast(LoginActivity.this,"登录成功");
+                                    SPUtils.put(LoginActivity.this,"userId",loginBean.getData().getUser().getUserId());
+                                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }else{
+                                    ToastUtils.showToast(LoginActivity.this,"登录失败");
+                                }
 
                             }
                             @Override
