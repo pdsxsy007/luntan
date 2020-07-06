@@ -63,7 +63,7 @@ public class MainActivity extends BaseActivity {
     private SettingUtils settingUtils;
     @BindView(R.id.swipeLayout)
     SmartRefreshLayout mSwipeLayout;
-    private int num = 0;
+    private int num = 1;
     @Override
     protected void initView() {
         super.initView();
@@ -119,7 +119,7 @@ public class MainActivity extends BaseActivity {
         mSwipeLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                num = 0;
+                num = 1;
                 getHomeRefreshData(refreshlayout);
             }
         });
@@ -148,7 +148,7 @@ public class MainActivity extends BaseActivity {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if(action.equals("refreshHomeData")){
-               num = 0;
+               num = 1;
                 mSwipeLayout.autoRefresh();
             }
         }
@@ -177,7 +177,7 @@ public class MainActivity extends BaseActivity {
                                 data.addAll(dataMore);
                                 tieAdapter = new TieAdapter(MainActivity.this,R.layout.list_item_tiezi,data);
                                 rv_msg_list.setAdapter(tieAdapter);
-                                num++;
+                                num+=1;
                                 if(refreshlayout != null){
                                     refreshlayout.finishLoadmore();
                                 }
@@ -195,7 +195,8 @@ public class MainActivity extends BaseActivity {
                                     }
                                 });
                             }else {
-                                refreshlayout.setLoadmoreFinished(true);
+                                refreshlayout.finishLoadmore();
+                                ToastUtils.showToast(MainActivity.this,"暂无更多数据啊!");
                             }
 
                         }
@@ -237,7 +238,7 @@ public class MainActivity extends BaseActivity {
                                 refreshlayout.finishRefresh();
                             }
 
-                            num=1;
+                            num=2;
                             tieAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
