@@ -1,6 +1,9 @@
 package convert.myapp.com.myapplication.avtivity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -128,8 +131,28 @@ public class MainActivity extends BaseActivity {
 
             }
         });
+        registerBoradcastReceiver();
 
     }
+
+    public void registerBoradcastReceiver() {
+        IntentFilter myIntentFilter = new IntentFilter();
+        myIntentFilter.addAction("refreshHomeData");
+        //注册广播
+        registerReceiver(broadcastReceiver, myIntentFilter);
+    }
+
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if(action.equals("refreshHomeData")){
+               num = 0;
+                mSwipeLayout.autoRefresh();
+            }
+        }
+    };
 
     /**
      * 加载更多数据
@@ -142,7 +165,8 @@ public class MainActivity extends BaseActivity {
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
-                        MyLogUtils.e("帖子列表刷新",response.body());
+                        MyLogUtils.e("帖子列表加载",num+"");
+                        MyLogUtils.e("帖子列表加载",response.body());
 
                         ArticleBean articleBean = JsonUtil.parseJson(response.body(),ArticleBean.class);
                         int code = articleBean.getCode();
@@ -153,7 +177,10 @@ public class MainActivity extends BaseActivity {
                                 tieAdapter = new TieAdapter(MainActivity.this,R.layout.list_item_tiezi,data);
                                 rv_msg_list.setAdapter(tieAdapter);
                                 num++;
-                                refreshlayout.finishLoadmore();
+                                if(refreshlayout != null){
+                                    refreshlayout.finishLoadmore();
+                                }
+
                                 tieAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
@@ -195,6 +222,7 @@ public class MainActivity extends BaseActivity {
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
+
                         MyLogUtils.e("帖子列表刷新",response.body());
 
                         ArticleBean articleBean = JsonUtil.parseJson(response.body(),ArticleBean.class);
@@ -204,7 +232,10 @@ public class MainActivity extends BaseActivity {
                             data = articleBean.getData();
                             tieAdapter = new TieAdapter(MainActivity.this,R.layout.list_item_tiezi,data);
                             rv_msg_list.setAdapter(tieAdapter);
-                            refreshlayout.finishRefresh();
+                            if(refreshlayout != null){
+                                refreshlayout.finishRefresh();
+                            }
+
                             num=1;
                             tieAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
                                 @Override
@@ -219,15 +250,20 @@ public class MainActivity extends BaseActivity {
                                 }
                             });
                         }else {
-                            refreshlayout.finishRefresh();
+                            if(refreshlayout != null){
+                                refreshlayout.finishRefresh();
+                            }
+
                         }
                     }
 
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
+                        if(refreshlayout != null){
+                            refreshlayout.finishRefresh();
+                        }
 
-                        refreshlayout.finishRefresh();
                     }
                 });
     }
@@ -310,6 +346,7 @@ public class MainActivity extends BaseActivity {
                                     Intent intent = new Intent(MainActivity.this,SendArticleActivity.class);
                                     intent.putExtra("nickNameId",data.get(position).getId()+"");
                                     startActivity(intent);
+                                    drawerlayout.closeDrawer(GravityCompat.START);
                                 }
 
                                 @Override
