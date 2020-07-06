@@ -41,13 +41,11 @@ import convert.myapp.com.myapplication.utils.SPUtils;
 public class SplashActivity extends AppCompatActivity {
 
     ImageView imageView;
-    private String s1;
-    private String s2;
+
     private Handler handler = new MyHandler(this);
-    private static String localVersionName;
+
     @BindView(R.id.webView)
     WebView webView;
-    public static final int PASSWORD_LOGIN_FLAG = 0x0004;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

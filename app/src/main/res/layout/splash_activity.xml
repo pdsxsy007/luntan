@@ -14,9 +14,5 @@
         android:adjustViewBounds="true"
         />
 
-    <WebView
-        android:visibility="gone"
-        android:id="@+id/webView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"></WebView>
+
 </LinearLayout>
