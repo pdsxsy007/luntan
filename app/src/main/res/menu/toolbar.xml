@@ -3,10 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/fatie"
+        android:title="发帖"
+        app:showAsAction="always"
+        />
+
+
+    <item
         android:id="@+id/setting"
         android:title="夜间模式"
         android:icon="@drawable/ic_launcher_foreground"
         app:showAsAction="withText"
+
         />
 
 

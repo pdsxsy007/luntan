@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--#616161-->
+    <color name="colorPrimary">#000000</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="textColorPrimary">#000000</color>
+    <color name="viewBackground">#000000</color>
+    <color name="drawbg">#000000</color>
+    <color name="textColor">@android:color/white</color>
+    <color name="viewBg">@android:color/white</color>
+    <color name="headerBg">#000000</color>
+    <color name="recylviewBg">#000000</color>
+    <color name="recylviewItemBg">#404040</color>
+</resources>
