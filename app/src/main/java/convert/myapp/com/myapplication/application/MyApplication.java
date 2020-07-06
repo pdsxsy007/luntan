@@ -29,7 +29,7 @@ public class MyApplication extends Application {
         super.onCreate();
         appContext = this.getApplicationContext();
         initAppTheme();
-        //initCockroach();
+       initCockroach();
 
 
         initOkGo();
