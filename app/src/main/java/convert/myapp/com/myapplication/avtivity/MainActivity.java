@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,10 +34,14 @@ import convert.myapp.com.myapplication.base.BaseActivity;
 import convert.myapp.com.myapplication.bean.ArticleBean;
 import convert.myapp.com.myapplication.bean.NickNameBean;
 import convert.myapp.com.myapplication.http.Api;
+import convert.myapp.com.myapplication.utils.ActivityUtils;
 import convert.myapp.com.myapplication.utils.JsonUtil;
 import convert.myapp.com.myapplication.utils.MyLogUtils;
 import convert.myapp.com.myapplication.utils.SettingUtils;
+import convert.myapp.com.myapplication.utils.ToastUtils;
 import okhttp3.Headers;
+
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 public class MainActivity extends BaseActivity {
 
@@ -317,5 +322,30 @@ public class MainActivity extends BaseActivity {
                 });
     }
 
+    /**
+     * 点击2次退出
+     */
+    long waitTime = 2000;
+    long touchTime = 0;
+
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+
+        if (event.getAction() == KeyEvent.ACTION_DOWN && KeyEvent.KEYCODE_BACK == keyCode) {
+
+            long currentTime = System.currentTimeMillis();
+            if ((currentTime - touchTime) >= waitTime) {
+                ToastUtils.showToast(MainActivity.this,"再按一次退出");
+
+                touchTime = currentTime;
+            } else {
+                ActivityUtils.getActivityManager().finishAllActivity();
+            }
+
+            return true;
+
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
 }
