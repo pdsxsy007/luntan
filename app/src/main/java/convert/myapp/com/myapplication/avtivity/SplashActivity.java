@@ -55,8 +55,7 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.splash_activity);
         imageView = (ImageView) findViewById(R.id.iv_bg);
 
-        getLocalVersionName(getApplicationContext());
-        //getMsg();
+
 
 
         initView();
@@ -94,57 +93,17 @@ public class SplashActivity extends AppCompatActivity {
                 finish();
             } else {
 
-//                if (SPUtil.getInstance().getBoolean(Constants.SP_HAD_OPEN_FINGERPRINT_LOGIN)) {
-//                   Intent intent = new Intent(SplashActivity.this,LoginActivity3.class);
-//                   startActivity(intent);
-//                   finish();
-//                }else {
                 Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                intent.putExtra("splash", "splash");
                 startActivity(intent);
                 finish();
-//                }
+
 
             }
-//            if (StringUtils.isEmpty((String)SPUtils.get(MyApp.getInstance(),"username",""))){
-//                Intent intent = new Intent(getApplicationContext(),Main3Activity.class);
-//                intent.putExtra("splash","splash");
-//                startActivity(intent);
-//                finish();
-//            }else {
-//
-//                if (SPUtil.getInstance().getBoolean(Constants.SP_HAD_OPEN_FINGERPRINT_LOGIN)) {
-//                    Intent intent = new Intent(SplashActivity.this,LoginActivity3.class);
-//                    startActivity(intent);
-//                    finish();
-//                }else {
-//                    netWorkLogin();
-//                }
-//
-//            }
-          /*  Intent intent = new Intent(getApplicationContext(),Main2Activity.class);
-            startActivity(intent);
-            finish();*/
+
         }
     }
 
 
-
-
-
-    public static String getLocalVersionName(Context ctx) {
-        try {
-            PackageInfo packageInfo = ctx.getApplicationContext()
-                    .getPackageManager()
-                    .getPackageInfo(ctx.getPackageName(), 0);
-            localVersionName = packageInfo.versionName;
-            Log.d("TAG", "本软件的版本号 = " + localVersionName);
-              SPUtils.put(ctx.getApplicationContext(),"VersionName", localVersionName);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        return localVersionName;
-    }
 
 
 
