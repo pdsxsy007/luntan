@@ -10,14 +10,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".avtivity.MainActivity">
+        <activity android:name=".avtivity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".avtivity.ArticleDetails" />
+        <activity android:name=".avtivity.ArticleDetailsActivity" />
+        <activity android:name=".avtivity.MainActivity" />
+        <activity android:name=".avtivity.RegiestActivity" />
     </application>
 
 </manifest>
