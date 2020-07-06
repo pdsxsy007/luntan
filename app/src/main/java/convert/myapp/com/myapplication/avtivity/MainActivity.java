@@ -165,6 +165,7 @@ public class MainActivity extends BaseActivity {
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
+
                         MyLogUtils.e("帖子列表加载",num+"");
                         MyLogUtils.e("帖子列表加载",response.body());
 
