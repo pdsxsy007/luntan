@@ -285,6 +285,7 @@ public class ArticleDetailsActivity extends BaseActivity {
                                         ToastUtils.showToast(ArticleDetailsActivity.this,msg);
                                         stopDialog();
 
+                                        num=1;
                                         getCommentList();
                                         Intent intent = new Intent();
                                         intent.setAction("refreshHomeData");
@@ -418,7 +419,7 @@ public class ArticleDetailsActivity extends BaseActivity {
                     .execute(new StringCallback() {
                         @Override
                         public void onSuccess(Response<String> response) {
-                            MyLogUtils.e("评论",response.body());
+                            MyLogUtils.e("评论。。。",response.body());
                             BaseBean baseBean = JsonUtil.parseJson(response.body(),BaseBean.class);
                             int code = baseBean.getCode();
                             if(code == 200){
@@ -426,6 +427,7 @@ public class ArticleDetailsActivity extends BaseActivity {
                                 ToastUtils.showToast(ArticleDetailsActivity.this,msg);
                                 stopDialog();
 
+                                num = 1;
                                 getCommentList();
                                 Intent intent = new Intent();
                                 intent.setAction("refreshHomeData");
