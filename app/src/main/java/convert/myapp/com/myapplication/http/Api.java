@@ -19,4 +19,6 @@ public class Api {
 
     public static String articleCommentSaveUrl = "/articleComment/save";//评论
 
+    public static String articleCollectionUrl = "/article/collection";//收藏
+
 }
