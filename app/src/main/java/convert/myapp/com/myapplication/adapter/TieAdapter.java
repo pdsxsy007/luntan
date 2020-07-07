@@ -31,17 +31,22 @@ public class TieAdapter extends CommonAdapter<ArticleBean.Data> {
         holder.setText(R.id.tv_time,s.getCreatTime());
         holder.setText(R.id.tv_title,s.getArticleTitle());
         holder.setText(R.id.tv_content,s.getArticleContent());
+        holder.setText(R.id.tv_collect_count,s.getCollectNumber()+ "");
         holder.setText(R.id.tv_comment_count,s.getRepliesNumber()+"");
 
         XCRoundImageView iv = holder.getConvertView().findViewById(R.id.xcimage);
         ImageView iv_comment = holder.getConvertView().findViewById(R.id.iv_comment);
+        ImageView iv_collect = holder.getConvertView().findViewById(R.id.iv_collect);
         Glide.with(mContext).load(Api.imgUrl+s.getNicknameUrl()).asBitmap().into(iv);
         int mode = mContext.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         if(mode == Configuration.UI_MODE_NIGHT_YES) {
             Glide.with(mContext).load(R.mipmap.comment_day).asBitmap().into(iv_comment);
+
         } else if(mode == Configuration.UI_MODE_NIGHT_NO) {
             Glide.with(mContext).load(R.mipmap.comment).asBitmap().into(iv_comment);
+
         }
+        Glide.with(mContext).load(R.mipmap.collect).asBitmap().into(iv_collect);
     }
 
 }

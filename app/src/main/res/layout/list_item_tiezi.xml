@@ -62,7 +62,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_alignParentRight="true"
-                        android:layout_marginRight="80dp"
+                        android:layout_marginRight="20dp"
                         >
                         <ImageView
                             android:id="@+id/iv_comment"
@@ -71,6 +71,27 @@
                             />
                         <TextView
                             android:id="@+id/tv_comment_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="dsd"
+                            android:layout_marginLeft="10dp"
+                            />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="80dp"
+                        android:layout_marginLeft="80dp"
+                        >
+                        <ImageView
+                            android:id="@+id/iv_collect"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            />
+                        <TextView
+                            android:id="@+id/tv_collect_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="dsd"
