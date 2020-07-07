@@ -76,7 +76,6 @@ public class LoginActivity extends BaseActivity {
                 OkGo.<String>post(Api.baseUrl + Api.loginUrl)
                         .params("userAccount",name)
                         .params("userPassword", pwd)
-
                         .execute(new StringCallback() {
                             @Override
                             public void onSuccess(Response<String> response) {
