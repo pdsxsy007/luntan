@@ -24,4 +24,7 @@ public class Api {
     public static String articleGetOneUrl = "/article/getOne";//收藏
 
     public static String userlistUrl="/user/list";//管理员登录用户列表
+
+    public static String updatauserUrl="/user/update";//管理员修改用户列表
+
 }

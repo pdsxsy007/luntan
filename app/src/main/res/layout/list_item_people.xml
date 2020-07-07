@@ -62,6 +62,7 @@
                 android:id="@+id/btn03"
                 android:text="解封"
                 style="@style/button"
+                android:visibility="gone"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
