@@ -454,6 +454,38 @@ public class ArticleDetailsActivity extends BaseActivity {
         }
     }
 
+
+    private void getTopData() {
+        OkGo.<String>get(Api.baseUrl+Api.articleGetOneUrl)
+                .params("pageNum",num)
+                .params("pageSize",10)
+                .params("articleId",articleId)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+
+                        MyLogUtils.e("评论列表",response.body());
+                        CommentBean commentBean = JsonUtil.parseJson(response.body(),CommentBean.class);
+                        int code = commentBean.getCode();
+                        if(code ==200){
+                            data = commentBean.getData();
+                            adapter = new CommentAdapter(ArticleDetailsActivity.this,R.layout.list_item_comment,data);
+                            recycler_view.setAdapter(adapter);
+                            num = 2;
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+
+
+                    }
+                });
+    }
+
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

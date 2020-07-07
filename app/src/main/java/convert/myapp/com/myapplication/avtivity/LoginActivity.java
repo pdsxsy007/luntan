@@ -82,11 +82,17 @@ public class LoginActivity extends BaseActivity {
                                 MyLogUtils.e("登录",response.body());
                                 LoginBean loginBean = JsonUtil.parseJson(response.body(),LoginBean.class);
                                 if(loginBean.getCode() == 200){
-                                    ToastUtils.showToast(LoginActivity.this,"登录成功");
-                                    SPUtils.put(LoginActivity.this,"userId",loginBean.getData().getUser().getUserId()+"");
-                                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                                    startActivity(intent);
-                                    finish();
+                                    String administrator = loginBean.getData().getUser().getAdministrator();
+                                    if(administrator.equals("1")){//管理员
+                                        Intent intent = new Intent(LoginActivity.this,ManagerActivity.class);
+                                        startActivity(intent);
+                                    }else {
+                                        SPUtils.put(LoginActivity.this,"userId",loginBean.getData().getUser().getUserId()+"");
+                                        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+
                                 }else{
                                     ToastUtils.showToast(LoginActivity.this,"登录失败");
                                 }

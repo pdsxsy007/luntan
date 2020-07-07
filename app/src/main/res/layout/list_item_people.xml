@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        >
+        <convert.myapp.com.myapplication.view.XCRoundImageView
+            android:id="@+id/xcimage"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@mipmap/touxiang"
+            ></convert.myapp.com.myapplication.view.XCRoundImageView>
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="hhhh"
+            android:textSize="16sp"
+            android:layout_marginLeft="20dp"
+            ></TextView>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            >
+            <Button
+                android:layout_width="80dp"
+                android:id="@+id/btn01"
+                android:text="禁言"
+                style="@style/button"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                />
+
+            <Button
+                android:layout_width="80dp"
+                android:id="@+id/btn02"
+                android:text="封禁"
+                style="@style/button"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                />
+
+            <Button
+                android:layout_width="80dp"
+                android:id="@+id/btn03"
+                android:text="解封"
+                style="@style/button"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/viewBg"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="10dp"
+        />
+
+</LinearLayout>
