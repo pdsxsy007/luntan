@@ -5,9 +5,9 @@ public class Api {
 
     public static String imgUrl = "http://192.168.30.30:9090";
 
-    public static String nickNameListUrl = "/nickname/list";
+    public static String nickNameListUrl = "/nickname/list";//昵称列表
 
-    public static String articleListUrl = "/article/list";
+    public static String articleListUrl = "/article/list";//帖子列表
 
     public static String loginUrl = "/user/login";//登录
 
@@ -20,5 +20,7 @@ public class Api {
     public static String articleCommentSaveUrl = "/articleComment/save";//评论
 
     public static String articleCollectionUrl = "/article/collection";//收藏
+
+    public static String articleGetOneUrl = "/article/getOne";//收藏
 
 }

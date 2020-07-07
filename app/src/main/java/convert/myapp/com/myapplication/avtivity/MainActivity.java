@@ -194,6 +194,7 @@ public class MainActivity extends BaseActivity {
                                         intent.putExtra("number",data.get(position).getRepliesNumber()+"");
                                         intent.putExtra("articleId",data.get(position).getId()+"");
                                         intent.putExtra("nicknameId",data.get(position).getNicknameId()+"");
+                                        intent.putExtra("userId",data.get(position).getUserId()+"");
                                         startActivity(intent);
                                     }
 
@@ -258,6 +259,8 @@ public class MainActivity extends BaseActivity {
                                     intent.putExtra("content",data.get(position).getArticleContent());
                                     intent.putExtra("number",data.get(position).getRepliesNumber()+"");
                                     intent.putExtra("articleId",data.get(position).getId()+"");
+                                    intent.putExtra("nicknameId",data.get(position).getNicknameId()+"");
+                                    intent.putExtra("userId",data.get(position).getUserId()+"");
                                     startActivity(intent);
                                 }
 

@@ -22,6 +22,7 @@
         <activity android:name=".avtivity.RegiestActivity" />
         <activity android:name=".avtivity.SendArticleActivity" />
         <activity android:name=".avtivity.LoginActivity" />
+        <activity android:name=".avtivity.ChooseActivity" />
     </application>
 
 </manifest>
