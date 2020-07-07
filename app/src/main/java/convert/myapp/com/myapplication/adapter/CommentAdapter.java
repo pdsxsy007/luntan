@@ -30,6 +30,7 @@ public class CommentAdapter extends CommonAdapter<CommentBean.Data> {
         holder.setText(R.id.tv_name,s.getNicknameName());
         holder.setText(R.id.tv_time,s.getCreatTime());
         holder.setText(R.id.tv_content,s.getCommentContent());
+        holder.setText(R.id.tv_loceng,position+1+"楼");
 
 
         XCRoundImageView iv = holder.getConvertView().findViewById(R.id.xcimage);

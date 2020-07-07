@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/recylviewBg"
@@ -17,10 +16,12 @@
         />
 
     <ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true"
-    >
+        android:layout_below="@id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:layout_marginBottom="50dp"
+        >
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -164,7 +165,7 @@
         <RelativeLayout
             android:layout_below="@id/ll_top"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="50dp"
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:descendantFocusability="blocksDescendants">
@@ -176,37 +177,89 @@
                 >
             </android.support.v7.widget.RecyclerView>
         </RelativeLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="vertical"
-            android:layout_alignParentBottom="true"
-            android:background="@color/recylviewItemBg"
-            >
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <EditText
-                    android:id="@+id/et_content"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@null"
-                    android:hint="点击添加回复"
-                    android:textColor="@color/textColor"
-                    android:layout_marginLeft="10dp"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="提交"
-                    android:textColor="@color/textColor"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    />
-            </RelativeLayout>
-        </LinearLayout>
+
     </RelativeLayout>
 
 </ScrollView>
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+
+        >
+        <RelativeLayout
+            android:id="@+id/rl_top"
+            android:visibility="invisible"
+            android:background="@color/recylviewItemBg"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="回复"
+                    android:textColor="@color/textColor"
+                    />
+                <TextView
+                    android:id="@+id/tv_replay_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="回复"
+                    android:textColor="@color/textColor"
+                    android:layout_marginLeft="10dp"
+                    />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@mipmap/touxiang"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                ></ImageView>
+        </RelativeLayout>
+        <View
+            android:id="@+id/views"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/viewBg"
+            android:visibility="gone"
+            />
+        <RelativeLayout
+            android:background="@color/recylviewItemBg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <EditText
+                android:id="@+id/et_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:focusable="false"
+                android:focusableInTouchMode="true"
+                android:hint="点击添加回复"
+                android:textColor="@color/textColor"
+                android:layout_marginLeft="10dp"
+                />
+            <TextView
+                android:id="@+id/tv_commit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="提交"
+                android:textColor="@color/textColor"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                />
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

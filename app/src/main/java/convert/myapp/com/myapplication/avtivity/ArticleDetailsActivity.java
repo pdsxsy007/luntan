@@ -1,14 +1,18 @@
 package convert.myapp.com.myapplication.avtivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -31,6 +35,7 @@ import convert.myapp.com.myapplication.bean.CommentBean;
 import convert.myapp.com.myapplication.http.Api;
 import convert.myapp.com.myapplication.utils.JsonUtil;
 import convert.myapp.com.myapplication.utils.MyLogUtils;
+import convert.myapp.com.myapplication.utils.ToastUtils;
 import convert.myapp.com.myapplication.view.XCRoundImageView;
 
 public class ArticleDetailsActivity extends BaseActivity {
@@ -59,10 +64,21 @@ public class ArticleDetailsActivity extends BaseActivity {
     RecyclerView recycler_view;
     @BindView(R.id.et_content)
     EditText et_content;
+    @BindView(R.id.rl_top)
+    RelativeLayout rl_top;
+    @BindView(R.id.views)
+    View views;
+    @BindView(R.id.tv_replay_name)
+    TextView tv_replay_name;
+    @BindView(R.id.tv_commit)
+    TextView tv_commit;
     private int num = 1;
     String articleId;
     private CommentAdapter adapter;
     private LinearLayoutManager mLinearLayoutManager;
+
+    private String replayName;
+    private String replayId;
     @Override
     protected int getResourceId() {
         return R.layout.activity_article_details;
@@ -80,6 +96,7 @@ public class ArticleDetailsActivity extends BaseActivity {
 
             }
         });
+
     }
 
     @Override
@@ -96,8 +113,12 @@ public class ArticleDetailsActivity extends BaseActivity {
         String title = getIntent().getStringExtra("title");
         String content = getIntent().getStringExtra("content");
         String number = getIntent().getStringExtra("number");
+        String nicknameId = getIntent().getStringExtra("nicknameId");
 
         articleId = getIntent().getStringExtra("articleId");
+        replayName = name;
+        replayId = nicknameId;
+
         tv_name.setText(name);
         tv_time.setText(time);
         tv_title.setText(title);
@@ -144,4 +165,43 @@ public class ArticleDetailsActivity extends BaseActivity {
                     }
                 });
     }
+
+    @Override
+    protected void initListener() {
+        super.initListener();
+
+        et_content.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                rl_top.setVisibility(View.VISIBLE);
+                views.setVisibility(View.VISIBLE);
+                showSoftInputFromWindow(et_content);
+                tv_replay_name.setText(replayName);
+            }
+        });
+
+        tv_commit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String content = et_content.getText().toString().trim();
+                if(content.equals("")){
+                    ToastUtils.showToast(ArticleDetailsActivity.this,"请输入回复内容!");
+                    return;
+                }
+
+            }
+        });
+    }
+
+    public void showSoftInputFromWindow(EditText editText){
+        editText.setFocusable(true);
+        editText.setFocusableInTouchMode(true);
+        editText.requestFocus();
+        InputMethodManager inputManager = (InputMethodManager) editText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.showSoftInput(editText, 0);
+    }
+
+
+
 }
