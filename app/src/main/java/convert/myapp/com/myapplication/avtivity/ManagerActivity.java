@@ -19,6 +19,7 @@ import convert.myapp.com.myapplication.R;
 import convert.myapp.com.myapplication.adapter.ManagerAdapter;
 import convert.myapp.com.myapplication.adapter.NickNameAdapter;
 import convert.myapp.com.myapplication.base.BaseActivity;
+import convert.myapp.com.myapplication.bean.AllUserBean;
 import convert.myapp.com.myapplication.bean.NickNameBean;
 import convert.myapp.com.myapplication.http.Api;
 import convert.myapp.com.myapplication.utils.JsonUtil;
@@ -66,16 +67,16 @@ public class ManagerActivity extends BaseActivity {
     private void initLeftData() {
 
 
-        OkGo.<String>get(Api.baseUrl+Api.nickNameListUrl)
+        OkGo.<String>get(Api.baseUrl+Api.userlistUrl)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
-                        MyLogUtils.e("左侧角色列表",response.body());
+                        MyLogUtils.e("所有角色列表",response.body());
 
-                        NickNameBean nickNameBean = JsonUtil.parseJson(response.body(),NickNameBean.class);
+                        AllUserBean nickNameBean = JsonUtil.parseJson(response.body(),AllUserBean.class);
                         int code = nickNameBean.getCode();
                         if(code == 200){
-                            final List<NickNameBean.Data> data = nickNameBean.getData();
+                            final List<AllUserBean.Data> data = nickNameBean.getData();
                             adapter = new ManagerAdapter(ManagerActivity.this,R.layout.list_item_people,data);
                             recyclerView.setAdapter(adapter);
 

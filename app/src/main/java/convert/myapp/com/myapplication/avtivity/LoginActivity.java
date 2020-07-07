@@ -84,8 +84,10 @@ public class LoginActivity extends BaseActivity {
                                 if(loginBean.getCode() == 200){
                                     String administrator = loginBean.getData().getUser().getAdministrator();
                                     if(administrator.equals("1")){//管理员
-                                        Intent intent = new Intent(LoginActivity.this,ManagerActivity.class);
+                                        Intent intent = new Intent(LoginActivity.this,ManagerActivity.class);SPUtils.put(LoginActivity.this,"userId",loginBean.getData().getUser().getUserId()+"");
+
                                         startActivity(intent);
+                                        finish();
                                     }else {
                                         SPUtils.put(LoginActivity.this,"userId",loginBean.getData().getUser().getUserId()+"");
                                         Intent intent = new Intent(LoginActivity.this,MainActivity.class);
