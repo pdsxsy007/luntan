@@ -40,6 +40,7 @@ import convert.myapp.com.myapplication.http.Api;
 import convert.myapp.com.myapplication.utils.ActivityUtils;
 import convert.myapp.com.myapplication.utils.JsonUtil;
 import convert.myapp.com.myapplication.utils.MyLogUtils;
+import convert.myapp.com.myapplication.utils.SPUtils;
 import convert.myapp.com.myapplication.utils.SettingUtils;
 import convert.myapp.com.myapplication.utils.ToastUtils;
 import okhttp3.Headers;
@@ -338,6 +339,16 @@ public class MainActivity extends BaseActivity {
                 //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 finish();
+                break;
+
+            case R.id.logout:
+                Intent intent2 = new Intent(MainActivity.this,LoginActivity.class);
+                //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                SPUtils.put(MainActivity.this,"userId","");
+
+                startActivity(intent2);
+                finish();
+
                 break;
         }
         return true;

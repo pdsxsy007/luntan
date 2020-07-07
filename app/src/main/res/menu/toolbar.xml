@@ -24,5 +24,11 @@
 
         />
 
+    <item
+        android:id="@+id/logout"
+        android:title="退出登录"
+        android:icon="@drawable/ic_launcher_foreground"
+        app:showAsAction="withText"
 
+        />
 </menu>
