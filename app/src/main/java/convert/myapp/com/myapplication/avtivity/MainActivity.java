@@ -321,7 +321,13 @@ public class MainActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.fatie://发帖
-                drawerlayout.openDrawer(GravityCompat.START);
+                String forbiddenWordsId = (String) SPUtils.get(MainActivity.this, "ForbiddenWordsId", "");
+                if(forbiddenWordsId.equals("0")){
+                    drawerlayout.openDrawer(GravityCompat.START);
+                }else {
+                    ToastUtils.showToast(MainActivity.this,"您的账号已禁言!");
+                }
+
 
                 break;
             case R.id.setting://日夜切换
@@ -334,16 +340,14 @@ public class MainActivity extends BaseActivity {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                     settingUtils.saveNightMode(true);
                 }
-                //recreate();
+
                 Intent intent = new Intent(MainActivity.this,MainActivity.class);
-                //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 finish();
                 break;
 
             case R.id.logout:
                 Intent intent2 = new Intent(MainActivity.this,LoginActivity.class);
-                //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                 SPUtils.put(MainActivity.this,"userId","");
 
                 startActivity(intent2);

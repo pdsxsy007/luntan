@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -39,6 +40,7 @@ import convert.myapp.com.myapplication.adapter.CommentAdapter;
 import convert.myapp.com.myapplication.adapter.TieAdapter;
 import convert.myapp.com.myapplication.base.BaseActivity;
 import convert.myapp.com.myapplication.bean.ArticleBean;
+import convert.myapp.com.myapplication.bean.ArticleItemBean;
 import convert.myapp.com.myapplication.bean.BaseBean;
 import convert.myapp.com.myapplication.bean.CommentBean;
 import convert.myapp.com.myapplication.http.Api;
@@ -116,6 +118,7 @@ public class ArticleDetailsActivity extends BaseActivity {
             }
         });
         registerBoradcastReceiver();
+
     }
 
     public void registerBoradcastReceiver() {
@@ -181,6 +184,7 @@ public class ArticleDetailsActivity extends BaseActivity {
         }
 
         getCommentList();
+
     }
 
     private void getCommentList() {
@@ -242,6 +246,7 @@ public class ArticleDetailsActivity extends BaseActivity {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 num = 1;
+                getTopData();
                 getCommentRefreshData(refreshlayout);
             }
         });
@@ -249,6 +254,7 @@ public class ArticleDetailsActivity extends BaseActivity {
         mSwipeLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore( RefreshLayout refreshlayout) {
+                getTopData();
                 getCommentLoadData(refreshlayout);
 
             }
@@ -264,55 +270,63 @@ public class ArticleDetailsActivity extends BaseActivity {
                     return;
                 }
 
-                String userIdByLogin = (String) SPUtils.get(ArticleDetailsActivity.this, "userId", "");//当前登陆的用户
-                if(userIdByLogin.equals(userId)){//同一个用户评论，不需要弹出选择角色框
+                String forbiddenWordsId = (String) SPUtils.get(ArticleDetailsActivity.this, "ForbiddenWordsId", "");
+                if(forbiddenWordsId.equals("0")){
+                    String userIdByLogin = (String) SPUtils.get(ArticleDetailsActivity.this, "userId", "");//当前登陆的用户
+                    if(userIdByLogin.equals(userId)){//同一个用户评论，不需要弹出选择角色框
 
-                    OkGo.<String>post(Api.baseUrl + Api.articleCommentSaveUrl)
-                            .params("articleId",articleId)
-                            .params("commentContent", content)
-                            .params("nicknameId", nicknameId)
-                            .params("userId", (String) SPUtils.get(ArticleDetailsActivity.this,"userId",""))
-                            .params("replyUserId", userId)
-                            .params("replyNicknameId", replayId)
-                            .execute(new StringCallback() {
-                                @Override
-                                public void onSuccess(Response<String> response) {
-                                    MyLogUtils.e("评论",response.body());
-                                    BaseBean baseBean = JsonUtil.parseJson(response.body(),BaseBean.class);
-                                    int code = baseBean.getCode();
-                                    if(code == 200){
-                                        String msg = baseBean.getMsg();
-                                        ToastUtils.showToast(ArticleDetailsActivity.this,msg);
-                                        stopDialog();
+                        OkGo.<String>post(Api.baseUrl + Api.articleCommentSaveUrl)
+                                .params("articleId",articleId)
+                                .params("commentContent", content)
+                                .params("nicknameId", nicknameId)
+                                .params("userId", (String) SPUtils.get(ArticleDetailsActivity.this,"userId",""))
+                                .params("replyUserId", userId)
+                                .params("replyNicknameId", replayId)
+                                .execute(new StringCallback() {
+                                    @Override
+                                    public void onSuccess(Response<String> response) {
+                                        MyLogUtils.e("评论",response.body());
+                                        BaseBean baseBean = JsonUtil.parseJson(response.body(),BaseBean.class);
+                                        int code = baseBean.getCode();
+                                        if(code == 200){
+                                            String msg = baseBean.getMsg();
+                                            ToastUtils.showToast(ArticleDetailsActivity.this,msg);
+                                            stopDialog();
 
-                                        num=1;
-                                        getCommentList();
-                                        Intent intent = new Intent();
-                                        intent.setAction("refreshHomeData");
-                                        sendBroadcast(intent);
+                                            num=1;
+                                            getCommentList();
+                                            Intent intent = new Intent();
+                                            intent.setAction("refreshHomeData");
+                                            sendBroadcast(intent);
+
+                                        }
+
+                                    }
+                                    @Override
+                                    public void onError(Response<String> response) {
+                                        super.onError(response);
 
                                     }
 
-                                }
-                                @Override
-                                public void onError(Response<String> response) {
-                                    super.onError(response);
+                                    @Override
+                                    public void onStart(Request<String, ? extends Request> request) {
+                                        super.onStart(request);
+                                        showDialog("评论中");
+                                    }
+                                });
 
-                                }
+                    }else {//其他用户评论本帖子
 
-                                @Override
-                                public void onStart(Request<String, ? extends Request> request) {
-                                    super.onStart(request);
-                                    showDialog("评论中");
-                                }
-                            });
+                        Intent intent = new Intent(ArticleDetailsActivity.this,ChooseActivity.class);
+                        startActivityForResult(intent,99);
 
-                }else {//其他用户评论本帖子
+                    }
 
-                    Intent intent = new Intent(ArticleDetailsActivity.this,ChooseActivity.class);
-                    startActivityForResult(intent,99);
-
+                }else {
+                    ToastUtils.showToast(ArticleDetailsActivity.this,"您的账号已禁言!");
                 }
+
+
 
 
 
@@ -457,21 +471,21 @@ public class ArticleDetailsActivity extends BaseActivity {
 
     private void getTopData() {
         OkGo.<String>get(Api.baseUrl+Api.articleGetOneUrl)
-                .params("pageNum",num)
-                .params("pageSize",10)
-                .params("articleId",articleId)
+                .params("id",articleId)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
 
-                        MyLogUtils.e("评论列表",response.body());
-                        CommentBean commentBean = JsonUtil.parseJson(response.body(),CommentBean.class);
+                        MyLogUtils.e("顶部数据",response.body());
+                        ArticleItemBean commentBean = JsonUtil.parseJson(response.body(),ArticleItemBean.class);
                         int code = commentBean.getCode();
                         if(code ==200){
-                            data = commentBean.getData();
-                            adapter = new CommentAdapter(ArticleDetailsActivity.this,R.layout.list_item_comment,data);
-                            recycler_view.setAdapter(adapter);
-                            num = 2;
+                            ArticleItemBean.Data data = commentBean.getData();
+                            tv_name.setText(data.getNicknameName());
+                            tv_time.setText(data.getCreatTime());
+                            tv_title.setText(data.getArticleTitle());
+                            tv_content.setText(data.getArticleContent());
+                            tv_comment_count.setText(data.getRepliesNumber()+"");
                         }
 
                     }

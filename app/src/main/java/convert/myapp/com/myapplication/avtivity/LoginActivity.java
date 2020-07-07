@@ -89,10 +89,18 @@ public class LoginActivity extends BaseActivity {
                                         startActivity(intent);
                                         finish();
                                     }else {
-                                        SPUtils.put(LoginActivity.this,"userId",loginBean.getData().getUser().getUserId()+"");
-                                        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                                        startActivity(intent);
-                                        finish();
+                                        String s = loginBean.getData().getUser().getDeleted() + "";
+                                        if(s.equals("0")){
+                                            SPUtils.put(LoginActivity.this,"userId",loginBean.getData().getUser().getUserId()+"");
+                                            SPUtils.put(LoginActivity.this,"deletedId",loginBean.getData().getUser().getDeleted()+"");//封禁
+                                            SPUtils.put(LoginActivity.this,"ForbiddenWordsId",loginBean.getData().getUser().getForbiddenWords()+"");//禁言
+                                            Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                                            startActivity(intent);
+                                            finish();
+                                        }else {
+                                            ToastUtils.showToast(LoginActivity.this,"当前用户已封禁，暂无法登陆，请联系管理员！");
+                                        }
+
                                     }
 
                                 }else{
