@@ -186,6 +186,13 @@ public class MainActivity extends BaseActivity {
                                     @Override
                                     public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
                                         Intent intent = new Intent(MainActivity.this, ArticleDetailsActivity.class);
+                                        intent.putExtra("imageUrl",data.get(position).getNicknameUrl());
+                                        intent.putExtra("time",data.get(position).getCreatTime());
+                                        intent.putExtra("name",data.get(position).getNicknameName());
+                                        intent.putExtra("title",data.get(position).getArticleTitle());
+                                        intent.putExtra("content",data.get(position).getArticleContent());
+                                        intent.putExtra("number",data.get(position).getRepliesNumber()+"");
+                                        intent.putExtra("articleId",data.get(position).getId()+"");
                                         startActivity(intent);
                                     }
 
@@ -196,7 +203,7 @@ public class MainActivity extends BaseActivity {
                                 });
                             }else {
                                 refreshlayout.finishLoadmore();
-                                ToastUtils.showToast(MainActivity.this,"暂无更多数据啊!");
+                                //ToastUtils.showToast(MainActivity.this,"暂无更多数据啊!");
                             }
 
                         }
@@ -243,6 +250,13 @@ public class MainActivity extends BaseActivity {
                                 @Override
                                 public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
                                     Intent intent = new Intent(MainActivity.this, ArticleDetailsActivity.class);
+                                    intent.putExtra("imageUrl",data.get(position).getNicknameUrl());
+                                    intent.putExtra("time",data.get(position).getCreatTime());
+                                    intent.putExtra("name",data.get(position).getNicknameName());
+                                    intent.putExtra("title",data.get(position).getArticleTitle());
+                                    intent.putExtra("content",data.get(position).getArticleContent());
+                                    intent.putExtra("number",data.get(position).getRepliesNumber()+"");
+                                    intent.putExtra("articleId",data.get(position).getId()+"");
                                     startActivity(intent);
                                 }
 
@@ -387,4 +401,9 @@ public class MainActivity extends BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
+    }
 }
