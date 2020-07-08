@@ -14,14 +14,17 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class MyDBHelper extends SQLiteOpenHelper {
 
     String str="create table collect(id integer primary key autoincrement," +
-            "userid integer,articleid integer," +
-            "pid varchar(50),"+
-            "articleTitle varchar(50),"+
-            "articleContent varchar(50)," +
-            "collectNumber integer,creatTime varchar(50)," +
+            "userId varchar(100)," +//当前登陆账户的id
+            "articleId varchar(100)," +//帖子id
+            "articleUserId varchar(100),"+//帖子发布的用户id
+            "articleTitle varchar(100),"+
+            "articleContent varchar(100)," +
+            "collectNumber integer," +
+            "creatTime varchar(100)," +
             "repliesNumber integer," +
-            "nicknameId integer,nicknameName varchar(50)," +
-            "nicknameUrl varchar(50))";
+            "nicknameId integer," +
+            "nicknameName varchar(100)," +
+            "nicknameUrl varchar(100))";
 
 
 
