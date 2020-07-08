@@ -61,6 +61,7 @@ public class ManagerAdapter extends CommonAdapter<AllUserBean.Data> {
                                     if(registerBean.getCode() == 200){
                                         ToastUtils.showToast(mContext,"禁言成功");
                                         holder.setText(R.id.btn01,"解禁");
+                                        SPUtils.put(mContext,"userId","");
 
                                     }else{
                                         ToastUtils.showToast(mContext,"禁言失败");
@@ -89,6 +90,7 @@ public class ManagerAdapter extends CommonAdapter<AllUserBean.Data> {
                                         if(registerBean.getCode() == 200){
                                             ToastUtils.showToast(mContext,"解禁成功");
                                             holder.setText(R.id.btn01,"禁言");
+                                            SPUtils.put(mContext,"userId","");
                                         }else{
                                             ToastUtils.showToast(mContext,"解禁失败");
                                         }
@@ -117,6 +119,7 @@ public class ManagerAdapter extends CommonAdapter<AllUserBean.Data> {
                                     if(registerBean.getCode() == 200){
                                         ToastUtils.showToast(mContext,"封禁成功");
                                         holder.setText(R.id.btn02,"解封");
+                                        SPUtils.put(mContext,"userId","");
                                     }else{
                                         ToastUtils.showToast(mContext,"封禁失败");
                                     }
@@ -143,6 +146,7 @@ public class ManagerAdapter extends CommonAdapter<AllUserBean.Data> {
                                     if(registerBean.getCode() == 200){
                                         ToastUtils.showToast(mContext,"解封成功");
                                         holder.setText(R.id.btn02,"封禁");
+                                        SPUtils.put(mContext,"userId","");
                                     }else{
                                         ToastUtils.showToast(mContext,"解封失败");
                                     }
