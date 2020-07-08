@@ -49,7 +49,7 @@ public class ManagerAdapter extends CommonAdapter<AllUserBean.Data> {
                 public void onClick(View view) {
 
                     OkGo.<String>post(Api.baseUrl+Api.updatauserUrl)
-                            .params("userId",(String) SPUtils.get(mContext, "userId", ""))
+                            .params("userId",s.getUserId())
                             .params("forbiddenWords","1")
                             .params("deleted","0")
                             .execute(new StringCallback() {
@@ -79,7 +79,7 @@ public class ManagerAdapter extends CommonAdapter<AllUserBean.Data> {
                     public void onClick(View view) {
 
                         OkGo.<String>post(Api.baseUrl+Api.updatauserUrl)
-                                .params("userId",(String) SPUtils.get(mContext, "userId", ""))
+                                .params("userId",s.getUserId())
                                 .params("forbiddenWords","0")
                                 .params("deleted","0")
                                 .execute(new StringCallback() {
@@ -108,7 +108,7 @@ public class ManagerAdapter extends CommonAdapter<AllUserBean.Data> {
                 public void onClick(View view) {
 
                     OkGo.<String>post(Api.baseUrl+Api.updatauserUrl)
-                            .params("userId",(String) SPUtils.get(mContext, "userId", ""))
+                            .params("userId",s.getUserId())
                             .params("forbiddenWords","0")
                             .params("deleted","1")
                             .execute(new StringCallback() {
@@ -135,7 +135,7 @@ public class ManagerAdapter extends CommonAdapter<AllUserBean.Data> {
                 public void onClick(View view) {
 
                     OkGo.<String>post(Api.baseUrl+Api.updatauserUrl)
-                            .params("userId",(String) SPUtils.get(mContext, "userId", ""))
+                            .params("userId",s.getUserId())
                             .params("forbiddenWords","0")
                             .params("deleted","0")
                             .execute(new StringCallback() {
