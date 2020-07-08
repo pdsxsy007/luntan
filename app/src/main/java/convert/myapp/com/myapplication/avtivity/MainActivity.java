@@ -354,6 +354,11 @@ public class MainActivity extends BaseActivity {
                 finish();
 
                 break;
+            case R.id.setting2:
+                Intent intent3 = new Intent(MainActivity.this,ColletActivity.class);
+                startActivity(intent3);
+                break;
+
         }
         return true;
 
