@@ -14,7 +14,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class MyDBHelper extends SQLiteOpenHelper {
 
     String str="create table collect(id integer primary key autoincrement," +
-            "userid integer," +
+            "userid integer,articleid integer," +
             "pid varchar(50),"+
             "articleTitle varchar(50),"+
             "articleContent varchar(50)," +
