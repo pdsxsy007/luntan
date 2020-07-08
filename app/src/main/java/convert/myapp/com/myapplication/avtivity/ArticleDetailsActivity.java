@@ -67,7 +67,7 @@ public class ArticleDetailsActivity extends BaseActivity {
     @BindView(R.id.tv_comment_count)
     TextView tv_comment_count;
     @BindView(R.id.xcimage)
-    XCRoundImageView xcimage;
+    ImageView xcimage;
     @BindView(R.id.iv_comment)
     ImageView iv_comment;
     @BindView(R.id.iv_time)

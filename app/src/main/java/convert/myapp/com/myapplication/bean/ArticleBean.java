@@ -50,6 +50,8 @@ public class ArticleBean {
 
         private String nicknameUrl;
 
+        private int deleted;
+
         public void setId(int id){
             this.id = id;
         }
@@ -111,5 +113,12 @@ public class ArticleBean {
             return this.nicknameUrl;
         }
 
+        public int getDeleted() {
+            return deleted;
+        }
+
+        public void setDeleted(int deleted) {
+            this.deleted = deleted;
+        }
     }
 }

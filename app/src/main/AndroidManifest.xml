@@ -25,6 +25,7 @@
         <activity android:name=".avtivity.ChooseActivity" />
         <activity android:name=".avtivity.ManagerActivity" />
         <activity android:name=".avtivity.ColletActivity" />
+        <activity android:name=".avtivity.MyDeleteActivity" />
     </application>
 
 </manifest>

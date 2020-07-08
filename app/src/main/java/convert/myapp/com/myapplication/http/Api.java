@@ -27,4 +27,9 @@ public class Api {
 
     public static String updatauserUrl="/user/update";//管理员修改用户列表
 
+    public static String articleDeletedUrl="/article/deleted";//删除恢复帖子
+
+    public static String articleDeletedListUrl="/article/deletedList";//查看删除帖子列表
+
+
 }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spinnerclass">
+    <item>语c</item>
+    <item>二设 </item>
+    </string-array>
+</resources>

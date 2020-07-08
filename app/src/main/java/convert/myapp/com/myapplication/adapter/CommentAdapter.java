@@ -38,7 +38,7 @@ public class CommentAdapter extends CommonAdapter<CommentBean.Data> {
             holder.setText(R.id.tv_reply_name," 回复 "+replyNicknameName);
         }
 
-        XCRoundImageView iv = holder.getConvertView().findViewById(R.id.xcimage);
+        ImageView iv = holder.getConvertView().findViewById(R.id.xcimage);
         Glide.with(mContext).load(Api.imgUrl+s.getNicknameUrl()).asBitmap().into(iv);
         holder.setOnClickListener(R.id.btn_replay, new View.OnClickListener() {
             @Override

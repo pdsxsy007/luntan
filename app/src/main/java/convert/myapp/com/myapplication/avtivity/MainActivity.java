@@ -5,17 +5,27 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.lzy.okgo.OkGo;
@@ -27,6 +37,8 @@ import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -36,6 +48,8 @@ import convert.myapp.com.myapplication.adapter.TieAdapter;
 import convert.myapp.com.myapplication.base.BaseActivity;
 import convert.myapp.com.myapplication.bean.ArticleBean;
 import convert.myapp.com.myapplication.bean.NickNameBean;
+import convert.myapp.com.myapplication.fragment.OneFragment;
+import convert.myapp.com.myapplication.fragment.TwoFragment;
 import convert.myapp.com.myapplication.http.Api;
 import convert.myapp.com.myapplication.utils.ActivityUtils;
 import convert.myapp.com.myapplication.utils.JsonUtil;
@@ -55,16 +69,23 @@ public class MainActivity extends BaseActivity {
     DrawerLayout drawerlayout;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-    @BindView(R.id.rv_msg_list)
-    RecyclerView rv_msg_list;
+
     private NickNameAdapter adapter;
     private TieAdapter tieAdapter;
     private LinearLayoutManager mLinearLayoutManager;
-    private LinearLayoutManager mLinearLayoutManager2;
+
     private SettingUtils settingUtils;
-    @BindView(R.id.swipeLayout)
-    SmartRefreshLayout mSwipeLayout;
+
     private int num = 1;
+
+    @BindView(R.id.tl_tabs)
+    TabLayout tabLayout;
+
+    @BindView(R.id.vp_content)
+    ViewPager viewPager;
+
+    List<Fragment> fragments = new ArrayList<>();
+    List<String> titles = new ArrayList<>();
     @Override
     protected void initView() {
         super.initView();
@@ -72,11 +93,24 @@ public class MainActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mLinearLayoutManager = new LinearLayoutManager(this, LinearLayout.VERTICAL,false);
-        mLinearLayoutManager2 = new LinearLayoutManager(this, LinearLayout.VERTICAL,false);
         recyclerView.setLayoutManager(mLinearLayoutManager);
-        rv_msg_list.setLayoutManager(mLinearLayoutManager2);
 
-        mSwipeLayout.autoRefresh();
+
+        tabLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                setIndicator(tabLayout, 50, 50);
+            }
+        });
+
+        fragments.add(new OneFragment());
+        fragments.add(new TwoFragment());
+        titles.add("语c");
+        titles.add("二设");
+
+        viewPager.setAdapter(new MyViewPagerAdapter(getSupportFragmentManager()));
+        tabLayout.setupWithViewPager(viewPager);
+
     }
 
     @Override
@@ -85,6 +119,37 @@ public class MainActivity extends BaseActivity {
     }
 
 
+    private class MyViewPagerAdapter extends FragmentStatePagerAdapter{
+
+        public MyViewPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return fragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return fragments.size();
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            super.destroyItem(container, position, object);
+        }
+
+
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+
+            return titles.get(position);
+        }
+
+
+    }
     @Override
     protected void initListener() {
         super.initListener();
@@ -117,184 +182,11 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        mSwipeLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(RefreshLayout refreshlayout) {
-                num = 1;
-                getHomeRefreshData(refreshlayout);
-            }
-        });
 
-        mSwipeLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
-            @Override
-            public void onLoadmore( RefreshLayout refreshlayout) {
-                getHomeLoadData(refreshlayout);
-
-            }
-        });
-        registerBoradcastReceiver();
 
     }
 
-    public void registerBoradcastReceiver() {
-        IntentFilter myIntentFilter = new IntentFilter();
-        myIntentFilter.addAction("refreshHomeData");
-        //注册广播
-        registerReceiver(broadcastReceiver, myIntentFilter);
-    }
 
-    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if(action.equals("refreshHomeData")){
-               num = 1;
-                mSwipeLayout.autoRefresh();
-            }
-        }
-    };
-
-    /**
-     * 加载更多数据
-     * @param refreshlayout
-     */
-    private void getHomeLoadData(final RefreshLayout refreshlayout) {
-        OkGo.<String>get(Api.baseUrl+Api.articleListUrl)
-                .params("pageNum",num)
-                .params("pageSize",10)
-                .execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(Response<String> response) {
-
-                        MyLogUtils.e("帖子列表加载",num+"");
-                        MyLogUtils.e("帖子列表加载",response.body());
-
-                        ArticleBean articleBean = JsonUtil.parseJson(response.body(),ArticleBean.class);
-                        int code = articleBean.getCode();
-                        if(code == 200){
-                            List<ArticleBean.Data> dataMore = articleBean.getData();
-                            if(dataMore.size() > 0){
-                                data.addAll(dataMore);
-                                tieAdapter = new TieAdapter(MainActivity.this,R.layout.list_item_tiezi,data);
-                                rv_msg_list.setAdapter(tieAdapter);
-                                num+=1;
-                                if(refreshlayout != null){
-                                    refreshlayout.finishLoadmore();
-                                }
-
-                                tieAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
-                                    @Override
-                                    public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-                                        Intent intent = new Intent(MainActivity.this, ArticleDetailsActivity.class);
-                                        intent.putExtra("imageUrl",data.get(position).getNicknameUrl());
-                                        intent.putExtra("time",data.get(position).getCreatTime());
-                                        intent.putExtra("name",data.get(position).getNicknameName());
-                                        intent.putExtra("title",data.get(position).getArticleTitle());
-                                        intent.putExtra("content",data.get(position).getArticleContent());
-                                        intent.putExtra("number",data.get(position).getRepliesNumber()+"");
-                                        intent.putExtra("articleId",data.get(position).getId()+"");
-                                        intent.putExtra("nicknameId",data.get(position).getNicknameId()+"");
-                                        intent.putExtra("userId",data.get(position).getUserId()+"");
-                                        startActivity(intent);
-                                    }
-
-                                    @Override
-                                    public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
-                                        return false;
-                                    }
-                                });
-                            }else {
-                                refreshlayout.finishLoadmore();
-                                //ToastUtils.showToast(MainActivity.this,"暂无更多数据啊!");
-                            }
-
-                        }
-                    }
-
-                    @Override
-                    public void onError(Response<String> response) {
-                        super.onError(response);
-                        refreshlayout.finishLoadmore();
-                    }
-                });
-
-    }
-
-    List<ArticleBean.Data> data;
-
-    /**
-     * 刷新数据
-     * @param refreshlayout
-     */
-    private void getHomeRefreshData(final RefreshLayout refreshlayout) {
-        OkGo.<String>get(Api.baseUrl+Api.articleListUrl)
-                .params("pageNum",num)
-                .params("pageSize",10)
-                .execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(Response<String> response) {
-
-                        MyLogUtils.e("帖子列表刷新",response.body());
-
-                        ArticleBean articleBean = JsonUtil.parseJson(response.body(),ArticleBean.class);
-                        int code = articleBean.getCode();
-                        if(code == 200){
-
-                            data = articleBean.getData();
-                            tieAdapter = new TieAdapter(MainActivity.this,R.layout.list_item_tiezi,data);
-                            rv_msg_list.setAdapter(tieAdapter);
-                            if(refreshlayout != null){
-                                refreshlayout.finishRefresh();
-                            }
-
-                            num=2;
-                            tieAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-                                    Intent intent = new Intent(MainActivity.this, ArticleDetailsActivity.class);
-                                    intent.putExtra("imageUrl",data.get(position).getNicknameUrl());
-                                    intent.putExtra("time",data.get(position).getCreatTime());
-                                    intent.putExtra("name",data.get(position).getNicknameName());
-                                    intent.putExtra("title",data.get(position).getArticleTitle());
-                                    intent.putExtra("content",data.get(position).getArticleContent());
-                                    intent.putExtra("number",data.get(position).getRepliesNumber()+"");
-                                    intent.putExtra("articleId",data.get(position).getId()+"");
-                                    intent.putExtra("nicknameId",data.get(position).getNicknameId()+"");
-                                    intent.putExtra("userId",data.get(position).getUserId()+"");
-                                    startActivity(intent);
-                                }
-
-                                @Override
-                                public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
-                                    return false;
-                                }
-                            });
-                        }else {
-                            if(refreshlayout != null){
-                                refreshlayout.finishRefresh();
-                            }
-
-                        }
-                    }
-
-                    @Override
-                    public void onError(Response<String> response) {
-                        super.onError(response);
-                        if(refreshlayout != null){
-                            refreshlayout.finishRefresh();
-                        }
-
-                    }
-                });
-    }
-
-
-    @Override
-    protected void initData() {
-        super.initData();
-
-    }
 
 
     @Override
@@ -359,6 +251,11 @@ public class MainActivity extends BaseActivity {
                 startActivity(intent3);
                 break;
 
+            case R.id.setting3:
+                Intent intent4 = new Intent(MainActivity.this,MyDeleteActivity.class);
+                startActivity(intent4);
+                break;
+
         }
         return true;
 
@@ -377,23 +274,9 @@ public class MainActivity extends BaseActivity {
                         int code = nickNameBean.getCode();
                         if(code == 200){
                             final List<NickNameBean.Data> data = nickNameBean.getData();
-                            adapter = new NickNameAdapter(MainActivity.this,R.layout.list_item_nickname,data);
+                            adapter = new NickNameAdapter(MainActivity.this,R.layout.list_item_nickname2,data);
                             recyclerView.setAdapter(adapter);
-                            adapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
 
-                                    Intent intent = new Intent(MainActivity.this,SendArticleActivity.class);
-                                    intent.putExtra("nickNameId",data.get(position).getId()+"");
-                                    startActivity(intent);
-                                    drawerlayout.closeDrawer(GravityCompat.START);
-                                }
-
-                                @Override
-                                public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
-                                    return false;
-                                }
-                            });
                         }
                     }
                 });
@@ -425,9 +308,45 @@ public class MainActivity extends BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+
+
+    public static void setIndicator(TabLayout tabs, int leftDip, int rightDip) {
+        Class<?> tabLayout = tabs.getClass();
+        Field tabStrip = null;
+        try {
+            tabStrip = tabLayout.getDeclaredField("mTabStrip");
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+
+        tabStrip.setAccessible(true);
+        LinearLayout llTab = null;
+        try {
+            llTab = (LinearLayout) tabStrip.get(tabs);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        int left = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, leftDip, Resources.getSystem().getDisplayMetrics());
+        int right = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, rightDip, Resources.getSystem().getDisplayMetrics());
+
+        for (int i = 0; i < llTab.getChildCount(); i++) {
+            View child = llTab.getChildAt(i);
+            child.setPadding(0, 0, 0, 0);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1);
+            params.leftMargin = left;
+            params.rightMargin = right;
+            child.setLayoutParams(params);
+            child.invalidate();
+        }
+    }
+
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unregisterReceiver(broadcastReceiver);
+    protected void onPause() {
+        super.onPause();
+        /*if(drawerlayout.is){
+
+        }*/
+        drawerlayout.closeDrawer(GravityCompat.START);
     }
 }

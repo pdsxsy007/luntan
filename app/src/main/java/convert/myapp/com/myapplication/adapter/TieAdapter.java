@@ -59,7 +59,7 @@ public class TieAdapter extends CommonAdapter<ArticleBean.Data> {
         holder.setText(R.id.tv_collect_count,s.getCollectNumber()+ "");
         holder.setText(R.id.tv_comment_count,s.getRepliesNumber()+"");
 
-        XCRoundImageView iv = holder.getConvertView().findViewById(R.id.xcimage);
+        ImageView iv = holder.getConvertView().findViewById(R.id.xcimage);
         ImageView iv_comment = holder.getConvertView().findViewById(R.id.iv_comment);
         ImageView iv_collect = holder.getConvertView().findViewById(R.id.iv_collect);
         Glide.with(mContext).load(Api.imgUrl+s.getNicknameUrl()).asBitmap().into(iv);

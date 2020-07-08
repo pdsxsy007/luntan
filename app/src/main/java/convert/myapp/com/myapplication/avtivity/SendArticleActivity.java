@@ -4,8 +4,12 @@ import android.content.Intent;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -34,6 +38,14 @@ public class SendArticleActivity extends BaseActivity {
 
     @BindView(R.id.btn_login)
     Button btn_login;
+
+    @BindView(R.id.tv_fenlei)
+    TextView tv_fenlei;
+
+    @BindView(R.id.sp)
+    Spinner sp;
+
+    private int position = 1;
     @Override
     protected int getResourceId() {
         return R.layout.activity_send_activle;
@@ -52,6 +64,21 @@ public class SendArticleActivity extends BaseActivity {
 
             }
         });
+        final String[] mItems = getResources().getStringArray(R.array.spinnerclass);
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, mItems);
+        sp.setAdapter(adapter);
+        sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                position = i+1;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
     }
 
     @Override
@@ -72,6 +99,7 @@ public class SendArticleActivity extends BaseActivity {
                         .params("articleTitle",name)
                         .params("articleContent", pwd)
                         .params("nicknameId", nickNameId)
+                        .params("articleType", position)
                         .params("userId", (String)SPUtils.get(SendArticleActivity.this,"userId",""))
                         .execute(new StringCallback() {
                             @Override
