@@ -71,7 +71,7 @@ public class ColletActivity extends BaseActivity {
     }
 
     private void getData() {
-
+        collectBeans.clear();
         myDBHelper = new MyDBHelper(ColletActivity.this,"collect.db",null,1);
 
         SQLiteDatabase db = myDBHelper.getReadableDatabase();
@@ -93,49 +93,13 @@ public class ColletActivity extends BaseActivity {
             collectBean.setNicknameUrl(cursor.getString(11));
             collectBeans.add(collectBean);
         }
+        cursor.close();
           if(collectBeans.size() >0){
               adapter = new ColletAdapter(this,R.layout.list_item_tiezi,collectBeans);
               recyclerView.setAdapter(adapter);
           }
 
-//       collectBeans.addAll()
-        /*OkGo.<String>get(Api.baseUrl+Api.nickNameListUrl)
-                .execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(Response<String> response) {
-                        MyLogUtils.e("左侧角色列表",response.body());
 
-                        NickNameBean nickNameBean = JsonUtil.parseJson(response.body(),NickNameBean.class);
-                        int code = nickNameBean.getCode();
-                        if(code == 200){
-                            final List<NickNameBean.Data> data = nickNameBean.getData();
-                            adapter = new ColletAdapter(ColletActivity.this,R.layout.list_item_tiezi,data);
-                            recyclerView.setAdapter(adapter);
-                            adapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-
-                                    Intent intent = new Intent(ColletActivity.this, ArticleDetailsActivity.class);
-                                    intent.putExtra("imageUrl",data.get(position).getNicknameUrl());
-                                    intent.putExtra("time",data.get(position).getCreatTime());
-                                    intent.putExtra("name",data.get(position).getNicknameName());
-                                    intent.putExtra("title",data.get(position).getArticleTitle());
-                                    intent.putExtra("content",data.get(position).getArticleContent());
-                                    intent.putExtra("number",data.get(position).getRepliesNumber()+"");
-                                    intent.putExtra("articleId",data.get(position).getId()+"");
-                                    intent.putExtra("nicknameId",data.get(position).getNicknameId()+"");
-                                    intent.putExtra("userId",data.get(position).getUserId()+"");
-                                    startActivity(intent);
-                                }
-
-                                @Override
-                                public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
-                                    return false;
-                                }
-                            });
-                        }
-                    }
-                });*/
     }
 
 
