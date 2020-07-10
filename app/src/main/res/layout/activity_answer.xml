@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        />
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        >
+                        <TextView
+                            android:id="@+id/tv_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="hhhh"
+                            android:textSize="16sp"
+                            android:layout_marginLeft="20dp"
+                            android:textStyle="bold"
+                            ></TextView>
+
+
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="140dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        >
+                        <TextView
+                            android:id="@+id/tv_name2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="hhhh"
+                            android:textSize="16sp"
+                            android:layout_marginLeft="20dp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="10dp"
+                            />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            >
+                            <TextView
+                                android:id="@+id/tv_choose01"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="hhhh"
+                                android:textSize="16sp"
+                                android:layout_marginLeft="20dp"
+                                android:textStyle="bold"
+                                />
+
+                            <TextView
+                                android:id="@+id/tv_choose02"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="hhhh"
+                                android:textSize="16sp"
+                                android:layout_marginLeft="20dp"
+                                android:textStyle="bold"
+                                />
+
+                            <TextView
+                                android:id="@+id/tv_choose03"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="hhhh"
+                                android:textSize="16sp"
+                                android:layout_marginLeft="20dp"
+                                android:textStyle="bold"
+                                />
+
+                            <TextView
+                                android:id="@+id/tv_choose04"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="hhhh"
+                                android:textSize="16sp"
+                                android:layout_marginLeft="20dp"
+                                android:textStyle="bold"
+                                />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="140dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        >
+                        <TextView
+                            android:id="@+id/tv_name3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="hhhh"
+                            android:textSize="16sp"
+                            android:layout_marginLeft="20dp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="10dp"
+                            />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            >
+                            <TextView
+                                android:id="@+id/tv_choose05"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="hhhh"
+                                android:textSize="16sp"
+                                android:layout_marginLeft="20dp"
+                                android:textStyle="bold"
+                                />
+
+                            <TextView
+                                android:id="@+id/tv_choose06"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="hhhh"
+                                android:textSize="16sp"
+                                android:layout_marginLeft="20dp"
+                                android:textStyle="bold"
+                                />
+
+                            <TextView
+                                android:id="@+id/tv_choose07"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="hhhh"
+                                android:textSize="16sp"
+                                android:layout_marginLeft="20dp"
+                                android:textStyle="bold"
+                                />
+
+                            <TextView
+                                android:id="@+id/tv_choose08"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="hhhh"
+                                android:textSize="16sp"
+                                android:layout_marginLeft="20dp"
+                                android:textStyle="bold"
+                                />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+    <EditText
+        android:id="@+id/et01"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@null"
+        android:hint="请输入第一个问题答案"
+        android:textCursorDrawable="@null"
+        android:padding="12sp"
+        android:singleLine="true"
+        android:textColor="@color/textColor"
+        android:textSize="13sp"
+        android:text=""
+        android:gravity="center|start"/>
+
+    <EditText
+        android:id="@+id/et02"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@null"
+        android:hint="请输入第二个问题答案"
+        android:textCursorDrawable="@null"
+        android:padding="12sp"
+        android:singleLine="true"
+        android:textColor="@color/textColor"
+        android:textSize="13sp"
+        android:text=""
+        android:gravity="center|start"/>
+
+    <EditText
+        android:id="@+id/et03"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@null"
+        android:hint="请输入第三个问题答案"
+        android:textCursorDrawable="@null"
+        android:padding="12sp"
+        android:singleLine="true"
+        android:textColor="@color/textColor"
+        android:textSize="13sp"
+        android:text=""
+        android:gravity="center|start"/>
+
+    <Button
+        style="@style/button2"
+        android:id="@+id/btn_login"
+        android:text="确定"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="40dp"
+        />
+</LinearLayout>

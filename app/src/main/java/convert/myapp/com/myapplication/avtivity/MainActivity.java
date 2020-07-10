@@ -48,7 +48,9 @@ import convert.myapp.com.myapplication.adapter.TieAdapter;
 import convert.myapp.com.myapplication.base.BaseActivity;
 import convert.myapp.com.myapplication.bean.ArticleBean;
 import convert.myapp.com.myapplication.bean.NickNameBean;
+import convert.myapp.com.myapplication.fragment.FourFragment;
 import convert.myapp.com.myapplication.fragment.OneFragment;
+import convert.myapp.com.myapplication.fragment.ThreeFragment;
 import convert.myapp.com.myapplication.fragment.TwoFragment;
 import convert.myapp.com.myapplication.http.Api;
 import convert.myapp.com.myapplication.utils.ActivityUtils;
@@ -99,14 +101,18 @@ public class MainActivity extends BaseActivity {
         tabLayout.post(new Runnable() {
             @Override
             public void run() {
-                setIndicator(tabLayout, 50, 50);
+                setIndicator(tabLayout, 20, 20);
             }
         });
 
         fragments.add(new OneFragment());
         fragments.add(new TwoFragment());
-        titles.add("语c");
-        titles.add("二设");
+        fragments.add(new ThreeFragment());
+        fragments.add(new FourFragment());
+        titles.add("前进营地");
+        titles.add("据点宿舍");
+        titles.add("心智云图");
+        titles.add("版务");
 
         viewPager.setAdapter(new MyViewPagerAdapter(getSupportFragmentManager()));
         tabLayout.setupWithViewPager(viewPager);
@@ -241,6 +247,9 @@ public class MainActivity extends BaseActivity {
             case R.id.logout:
                 Intent intent2 = new Intent(MainActivity.this,LoginActivity.class);
                 SPUtils.put(MainActivity.this,"userId","");
+                SPUtils.put(MainActivity.this,"flag","");
+                SPUtils.put(MainActivity.this,"nickNameIdByComment","");
+                SPUtils.put(MainActivity.this,"nickNameUrlByComment","");
 
                 startActivity(intent2);
                 finish();

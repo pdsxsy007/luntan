@@ -35,7 +35,7 @@ public class ColletAdapter extends CommonAdapter<CollectBean> {
         holder.setText(R.id.tv_content,s.getArticleContent());
         holder.setText(R.id.tv_collect_count,s.getCollectNumber()+ "");
         holder.setText(R.id.tv_comment_count,s.getRepliesNumber()+"");
-        XCRoundImageView iv = holder.getConvertView().findViewById(R.id.xcimage);
+        ImageView iv = holder.getConvertView().findViewById(R.id.xcimage);
         Glide.with(mContext).load(Api.imgUrl+s.getNicknameUrl()).asBitmap().into(iv); int mode = mContext.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         if(mode == Configuration.UI_MODE_NIGHT_YES) {
             Glide.with(mContext).load(R.mipmap.comment_day).asBitmap().into(iv_comment);

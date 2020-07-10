@@ -1,6 +1,9 @@
 package convert.myapp.com.myapplication.avtivity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +21,7 @@ import java.util.List;
 import butterknife.BindView;
 import convert.myapp.com.myapplication.R;
 import convert.myapp.com.myapplication.adapter.NickNameAdapter;
+import convert.myapp.com.myapplication.adapter.NickNameAdapter2;
 import convert.myapp.com.myapplication.base.BaseActivity;
 import convert.myapp.com.myapplication.bean.NickNameBean;
 import convert.myapp.com.myapplication.http.Api;
@@ -32,7 +36,7 @@ public class ChooseActivity extends BaseActivity {
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
-    private NickNameAdapter adapter;
+    private NickNameAdapter2 adapter;
 
     private LinearLayoutManager mLinearLayoutManager;
 
@@ -55,7 +59,36 @@ public class ChooseActivity extends BaseActivity {
         });
         mLinearLayoutManager = new LinearLayoutManager(this, LinearLayout.VERTICAL,false);
         recyclerView.setLayoutManager(mLinearLayoutManager);
+
+        registerBoradcastReceiver();
+
     }
+
+    public void registerBoradcastReceiver() {
+        IntentFilter myIntentFilter = new IntentFilter();
+        myIntentFilter.addAction("refreshClick");
+        //注册广播
+        registerReceiver(broadcastReceiver, myIntentFilter);
+    }
+
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if(action.equals("refreshClick")){
+                String nickNameId = intent.getStringExtra("nickNameId");
+                String nickNameUrl = intent.getStringExtra("nickNameUrl");
+
+                Intent intent1 = new Intent();
+                intent1.putExtra("nickNameId",nickNameId);
+                intent1.putExtra("nickNameUrl",nickNameUrl);
+                ChooseActivity.this.setResult(99,intent1);
+                finish();
+            }
+        }
+    };
+
 
     @Override
     protected void initData() {
@@ -76,23 +109,9 @@ public class ChooseActivity extends BaseActivity {
                         int code = nickNameBean.getCode();
                         if(code == 200){
                             final List<NickNameBean.Data> data = nickNameBean.getData();
-                            adapter = new NickNameAdapter(ChooseActivity.this,R.layout.list_item_nickname,data);
+                            adapter = new NickNameAdapter2(ChooseActivity.this,R.layout.list_item_nickname2,data);
                             recyclerView.setAdapter(adapter);
-                            adapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
 
-                                    Intent intent = new Intent();
-                                    intent.putExtra("nickNameId",data.get(position).getId()+"");
-                                    setResult(99,intent);
-                                    finish();
-                                }
-
-                                @Override
-                                public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
-                                    return false;
-                                }
-                            });
                         }
                     }
                 });

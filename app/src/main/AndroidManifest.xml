@@ -26,6 +26,8 @@
         <activity android:name=".avtivity.ManagerActivity" />
         <activity android:name=".avtivity.ColletActivity" />
         <activity android:name=".avtivity.MyDeleteActivity" />
+        <activity android:name=".avtivity.ManagerUserActivity" />
+        <activity android:name=".avtivity.AnswerActivity" />
     </application>
 
 </manifest>

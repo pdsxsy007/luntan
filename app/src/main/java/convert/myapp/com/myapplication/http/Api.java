@@ -31,5 +31,7 @@ public class Api {
 
     public static String articleDeletedListUrl="/article/deletedList";//查看删除帖子列表
 
+    public static String questionBankListUrl="/questionBank/list";//随机查看问题列表
+
 
 }

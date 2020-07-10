@@ -106,14 +106,7 @@ public class MyDeleteActivity extends BaseActivity {
                                     @Override
                                     public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
                                         int id = data.get(position).getId();
-                                        int userId = data.get(position).getUserId();
-                                        String userId1 = (String) SPUtils.get(MyDeleteActivity.this, "userId", "");
-                                        if(userId1.equals(""+userId)){//同一个用户 可以删除
-                                            deleteItem(id,position);
-                                        }else {
-                                            ToastUtils.showToast(MyDeleteActivity.this,"当前帖子不是您发布的！");
-                                            return true;
-                                        }
+                                        deleteItem(id,position);
                                         return false;
                                     }
                                 });
@@ -175,7 +168,7 @@ public class MyDeleteActivity extends BaseActivity {
                                 int code = commentBean.getCode();
                                 if(code ==200){
                                     Intent intent = new Intent();
-                                    intent.setAction("refreshHomeData");
+                                    intent.setAction("refreshManager");
                                     sendBroadcast(intent);
                                     finish();
                                     ToastUtils.showToast(MyDeleteActivity.this,"恢复成功！");

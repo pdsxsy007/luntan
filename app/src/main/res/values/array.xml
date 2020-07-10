@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="spinnerclass">
-    <item>语c</item>
-    <item>二设 </item>
+    <item>前进营地</item>
+    <item>据点宿舍 </item>
+    <item>心智云图 </item>
+    <item>版务 </item>
     </string-array>
 </resources>

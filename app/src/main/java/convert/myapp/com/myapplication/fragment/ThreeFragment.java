@@ -35,12 +35,11 @@ import convert.myapp.com.myapplication.http.Api;
 import convert.myapp.com.myapplication.utils.DensityUtil;
 import convert.myapp.com.myapplication.utils.JsonUtil;
 import convert.myapp.com.myapplication.utils.MyLogUtils;
-import convert.myapp.com.myapplication.utils.SPUtils;
 import convert.myapp.com.myapplication.utils.ScreenSizeUtils;
 import convert.myapp.com.myapplication.utils.ToastUtils;
 import convert.myapp.com.myapplication.view.MyDialog;
 
-public class TwoFragment extends BaseFragment {
+public class ThreeFragment extends BaseFragment {
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
@@ -66,12 +65,6 @@ public class TwoFragment extends BaseFragment {
         //mSwipeLayout.autoRefresh();
         num = 1;
         getHomeRefreshData(null);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
     }
 
     @Override
@@ -122,7 +115,7 @@ public class TwoFragment extends BaseFragment {
         OkGo.<String>get(Api.baseUrl+Api.articleListUrl)
                 .params("pageNum",num)
                 .params("pageSize",10)
-                .params("articleType",2)
+                .params("articleType",3)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -200,7 +193,7 @@ public class TwoFragment extends BaseFragment {
         OkGo.<String>get(Api.baseUrl+Api.articleListUrl)
                 .params("pageNum",num)
                 .params("pageSize",10)
-                .params("articleType",2)
+                .params("articleType",3)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {

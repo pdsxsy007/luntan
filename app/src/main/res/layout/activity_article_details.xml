@@ -54,10 +54,11 @@
                         android:layout_height="70dp"
                         android:orientation="horizontal"
                         android:gravity="center_vertical"
-                        android:padding="10dp"
+
                         >
                         <ImageView
                             android:id="@+id/xcimage"
+                            android:layout_marginLeft="10dp"
                             android:layout_width="40dp"
                             android:layout_height="40dp"/>
 
@@ -69,6 +70,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
+                                android:layout_centerVertical="true"
                                 >
                                 <TextView
                                     android:id="@+id/tv_name"
@@ -97,7 +99,6 @@
                                 android:text="回复"
                                 style="@style/button"
                                 android:layout_alignParentRight="true"
-                                android:layout_centerVertical="true"
                                 />
                         </RelativeLayout>
 
@@ -176,8 +177,7 @@
                 </LinearLayout>
                 <RelativeLayout
                     android:layout_below="@id/ll_top"
-                    android:layout_marginTop="10dp"
-
+                    android:layout_marginTop="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:descendantFocusability="blocksDescendants">
@@ -242,6 +242,7 @@
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/touxiang"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@mipmap/touxiang"

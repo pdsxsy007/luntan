@@ -97,6 +97,7 @@
                             android:layout_height="wrap_content"
                             android:text="dsd"
                             android:layout_marginLeft="10dp"
+                            android:visibility="invisible"
                             />
                     </LinearLayout>
                 </RelativeLayout>

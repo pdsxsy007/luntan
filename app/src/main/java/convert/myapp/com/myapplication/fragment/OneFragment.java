@@ -157,7 +157,7 @@ public class OneFragment extends BaseFragment {
 
                                     @Override
                                     public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
-                                        int id = data.get(position).getId();
+                                       /* int id = data.get(position).getId();
                                         int userId = data.get(position).getUserId();
                                         String userId1 = (String) SPUtils.get(getActivity(), "userId", "");
                                         if(userId1.equals(""+userId)){//同一个用户 可以删除
@@ -165,7 +165,7 @@ public class OneFragment extends BaseFragment {
                                         }else {
                                             ToastUtils.showToast(getActivity(),"当前帖子不是您发布的！");
                                             return true;
-                                        }
+                                        }*/
                                         return false;
                                     }
                                 });
@@ -233,7 +233,7 @@ public class OneFragment extends BaseFragment {
 
                                 @Override
                                 public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
-                                    int id = data.get(position).getId();
+                                    /*int id = data.get(position).getId();
                                     int userId = data.get(position).getUserId();
                                     String userId1 = (String) SPUtils.get(getActivity(), "userId", "");
                                     if(userId1.equals(""+userId)){//同一个用户 可以删除
@@ -241,7 +241,7 @@ public class OneFragment extends BaseFragment {
                                     }else {
                                         ToastUtils.showToast(getActivity(),"当前帖子不是您发布的！");
                                         return true;
-                                    }
+                                    }*/
 
                                     return false;
                                 }

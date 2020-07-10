@@ -29,7 +29,7 @@
         android:title="恢复帖子"
         android:icon="@drawable/ic_launcher_foreground"
         app:showAsAction="withText"
-
+        android:visible="false"
         />
 
     <item

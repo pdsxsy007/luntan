@@ -3,6 +3,7 @@ package convert.myapp.com.myapplication.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -16,6 +17,7 @@ import convert.myapp.com.myapplication.R;
 import convert.myapp.com.myapplication.bean.ArticleBean;
 import convert.myapp.com.myapplication.bean.CommentBean;
 import convert.myapp.com.myapplication.http.Api;
+import convert.myapp.com.myapplication.utils.SPUtils;
 import convert.myapp.com.myapplication.view.XCRoundImageView;
 
 
@@ -29,6 +31,11 @@ public class CommentAdapter extends CommonAdapter<CommentBean.Data> {
     @Override
     protected void convert(ViewHolder holder, final CommentBean.Data s, final int position) {
 
+        String userId = (String) SPUtils.get(mContext, "userId", "");
+
+        if(userId.equals(s.getUserId()+"")){
+            holder.setTextColor(R.id.tv_name, Color.parseColor("#42adbb"));
+        }
         holder.setText(R.id.tv_name,s.getNicknameName());
         holder.setText(R.id.tv_time,s.getCreatTime());
         holder.setText(R.id.tv_content,s.getCommentContent());

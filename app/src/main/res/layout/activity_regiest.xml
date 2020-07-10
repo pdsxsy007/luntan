@@ -114,26 +114,18 @@
                     android:alpha="0.5"/>
             </LinearLayout>
 
-            <Button
-                style="@style/button2"
-                android:id="@+id/btn_login"
-                android:text="注册"
-                android:layout_marginLeft="40dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginRight="40dp"
-                />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:orientation="horizontal"
-                android:visibility="gone"
+                android:visibility="visible"
                 >
                 <RelativeLayout
                     android:id="@+id/rl_reg"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:visibility="invisible"
                     >
                     <TextView
                         android:layout_width="wrap_content"
@@ -150,15 +142,26 @@
                     android:layout_weight="1"
                     >
                     <TextView
+                        android:id="@+id/tv_answer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
                         android:textColor="@color/textColor"
                         android:layout_centerInParent="true"
-                        android:text="忘记密码"/>
+                        android:text="请先答题"/>
                 </RelativeLayout>
 
             </LinearLayout>
+            <Button
+                style="@style/button2"
+                android:id="@+id/btn_login"
+                android:text="注册"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="40dp"
+                />
+
+
         </LinearLayout>
     </ScrollView>
 

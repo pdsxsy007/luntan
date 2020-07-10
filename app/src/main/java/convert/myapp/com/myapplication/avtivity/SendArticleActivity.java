@@ -65,7 +65,7 @@ public class SendArticleActivity extends BaseActivity {
             }
         });
         final String[] mItems = getResources().getStringArray(R.array.spinnerclass);
-        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, mItems);
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item, mItems);
         sp.setAdapter(adapter);
         sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

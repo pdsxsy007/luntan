@@ -88,6 +88,8 @@ public class ArticleDetailsActivity extends BaseActivity {
     Button btn_replay;
     @BindView(R.id.ll_bottom)
     LinearLayout ll_bottom;
+    @BindView(R.id.touxiang)
+    ImageView touxiang;
 
     String articleId;
     private CommentAdapter adapter;
@@ -221,6 +223,14 @@ public class ArticleDetailsActivity extends BaseActivity {
     protected void initListener() {
         super.initListener();
 
+
+        String nickNameUrlByComment = (String) SPUtils.get(this, "nickNameUrlByComment", "");
+        if(!nickNameUrlByComment.equals("")){
+            Glide.with(this).load(Api.imgUrl+ this.nickNameUrlByComment).asBitmap().into(touxiang);
+        }
+
+
+
         et_content.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -229,6 +239,11 @@ public class ArticleDetailsActivity extends BaseActivity {
                 views.setVisibility(View.VISIBLE);
                 showSoftInputFromWindow(et_content);
                 tv_replay_name.setText(replayName);
+                String nickNameUrlByComment = (String) SPUtils.get(ArticleDetailsActivity.this, "nickNameUrlByComment", "");
+                if(!nickNameUrlByComment.equals("")){
+                    Glide.with(ArticleDetailsActivity.this).load(Api.imgUrl+ nickNameUrlByComment).asBitmap().into(touxiang);
+                }
+
             }
         });
 
@@ -239,6 +254,10 @@ public class ArticleDetailsActivity extends BaseActivity {
                 views.setVisibility(View.VISIBLE);
                 showSoftInputFromWindow(et_content);
                 tv_replay_name.setText(replayName);
+                String nickNameUrlByComment = (String) SPUtils.get(ArticleDetailsActivity.this, "nickNameUrlByComment", "");
+                if(!nickNameUrlByComment.equals("")){
+                    Glide.with(ArticleDetailsActivity.this).load(Api.imgUrl+ nickNameUrlByComment).asBitmap().into(touxiang);
+                }
             }
         });
 
@@ -317,8 +336,14 @@ public class ArticleDetailsActivity extends BaseActivity {
 
                     }else {//其他用户评论本帖子
 
-                        Intent intent = new Intent(ArticleDetailsActivity.this,ChooseActivity.class);
-                        startActivityForResult(intent,99);
+                        String flag = (String) SPUtils.get(ArticleDetailsActivity.this, "flag", "");
+                        if(!flag.equals("")){
+                            String nickNameIdByComment = (String) SPUtils.get(ArticleDetailsActivity.this, "nickNameIdByComment", "");
+                            addCommentByOther(nickNameIdByComment);
+                        }else {
+                            ToastUtils.showToast(ArticleDetailsActivity.this,"请先选择角色!");
+                        }
+
 
                     }
 
@@ -326,10 +351,14 @@ public class ArticleDetailsActivity extends BaseActivity {
                     ToastUtils.showToast(ArticleDetailsActivity.this,"您的账号已禁言!");
                 }
 
+            }
+        });
 
-
-
-
+        touxiang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ArticleDetailsActivity.this,ChooseActivity.class);
+                startActivityForResult(intent,99);
             }
         });
     }
@@ -418,54 +447,69 @@ public class ArticleDetailsActivity extends BaseActivity {
     }
 
 
+    private int flag = 0;
+    String nickNameIdByComment;
+    String nickNameUrlByComment;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == 99){
-            String nickNameIdByComment = data.getStringExtra("nickNameId");
-            OkGo.<String>post(Api.baseUrl + Api.articleCommentSaveUrl)
-                    .params("articleId",articleId)
-                    .params("commentContent", content)
-                    .params("nicknameId", nickNameIdByComment)
-                    .params("userId", (String) SPUtils.get(ArticleDetailsActivity.this,"userId",""))
-                    .params("replyUserId", userId)
-                    .params("replyNicknameId", replayId)
-                    .execute(new StringCallback() {
-                        @Override
-                        public void onSuccess(Response<String> response) {
-                            MyLogUtils.e("评论。。。",response.body());
-                            BaseBean baseBean = JsonUtil.parseJson(response.body(),BaseBean.class);
-                            int code = baseBean.getCode();
-                            if(code == 200){
-                                String msg = baseBean.getMsg();
-                                ToastUtils.showToast(ArticleDetailsActivity.this,msg);
-                                stopDialog();
 
-                                num = 1;
-                                getCommentList();
-                                Intent intent = new Intent();
-                                intent.setAction("refreshHomeData");
-                                sendBroadcast(intent);
-                                rl_top.setVisibility(View.INVISIBLE);
-                                views.setVisibility(View.GONE);
-                                tv_replay_name.setText("");
-                                et_content.setText("");
-                            }
+            nickNameIdByComment = data.getStringExtra("nickNameId");
 
-                        }
-                        @Override
-                        public void onError(Response<String> response) {
-                            super.onError(response);
+            nickNameUrlByComment = data.getStringExtra("nickNameUrl");
+            flag = 1;
+            SPUtils.put(ArticleDetailsActivity.this,"flag",flag+"");
+            SPUtils.put(ArticleDetailsActivity.this,"nickNameIdByComment",nickNameIdByComment+"");
+            SPUtils.put(ArticleDetailsActivity.this,"nickNameUrlByComment",nickNameUrlByComment+"");
 
-                        }
-
-                        @Override
-                        public void onStart(Request<String, ? extends Request> request) {
-                            super.onStart(request);
-                            showDialog("评论中");
-                        }
-                    });
+            Glide.with(this).load(Api.imgUrl+nickNameUrlByComment).asBitmap().into(touxiang);
         }
+    }
+
+    private void addCommentByOther(String nickNameIdByComment) {
+        OkGo.<String>post(Api.baseUrl + Api.articleCommentSaveUrl)
+                .params("articleId",articleId)
+                .params("commentContent", content)
+                .params("nicknameId", nickNameIdByComment)
+                .params("userId", (String) SPUtils.get(ArticleDetailsActivity.this,"userId",""))
+                .params("replyUserId", userId)
+                .params("replyNicknameId", replayId)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        MyLogUtils.e("评论。。。",response.body());
+                        BaseBean baseBean = JsonUtil.parseJson(response.body(),BaseBean.class);
+                        int code = baseBean.getCode();
+                        if(code == 200){
+                            String msg = baseBean.getMsg();
+                            ToastUtils.showToast(ArticleDetailsActivity.this,msg);
+                            stopDialog();
+
+                            num = 1;
+                            getCommentList();
+                            Intent intent = new Intent();
+                            intent.setAction("refreshHomeData");
+                            sendBroadcast(intent);
+                            rl_top.setVisibility(View.INVISIBLE);
+                            views.setVisibility(View.GONE);
+                            tv_replay_name.setText("");
+                            et_content.setText("");
+                        }
+
+                    }
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+
+                    }
+
+                    @Override
+                    public void onStart(Request<String, ? extends Request> request) {
+                        super.onStart(request);
+                        showDialog("评论中");
+                    }
+                });
     }
 
 
